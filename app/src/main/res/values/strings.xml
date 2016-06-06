@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyMeteringDevices</string>
+    <string name="app_name">Счётчики</string>
     <string name="about_text_1">Мои счётчики</string>
     <string name="about_text_2">Сбор и хранение информации о приборах учёта</string>
     <string name="title_activity_navigation">NavigationActivity</string>
@@ -8,4 +8,14 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="drawer_open">open</string>
+    <string name="drawer_close">close</string>
+    <string name="menu_summary">Сводка</string>
+    <string name="menu_devices">Мои счётчики</string>
+    <string name="menu_about">О приложении</string>
+    <string name="menu_device_types">Типы счётчиков</string>
+    <string name="menu_enter_meteting">Ввод показаний</string>
+    <string name="menu_all_meteting">Все показания</string>
+    <string name="title_about">О приложении</string>
+    <string name="title_device_types">Типы устройств</string>
 </resources>

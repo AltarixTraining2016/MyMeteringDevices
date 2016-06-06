@@ -1,21 +1,38 @@
 package me.ilich.mymeteringdevices.data;
 
+import android.database.Cursor;
+import android.database.MatrixCursor;
+
 public class DeviceType {
 
-    private final int id;
-    private final String title;
+    static String ID = "_id";
+    static String NAME = "name";
 
-    public DeviceType(int id, String title) {
+    public static final String[] COLUMN_NAMES = {
+            ID,
+            NAME
+    };
+
+    public static DeviceType fromCursor(Cursor cursor) {
+        int id = cursor.getInt(cursor.getColumnIndex(ID));
+        String name = cursor.getString(cursor.getColumnIndex(NAME));
+        return new DeviceType(id, name);
+    }
+
+    private final int id;
+    private final String name;
+
+    public DeviceType(int id, String name) {
         this.id = id;
-        this.title = title;
+        this.name = name;
     }
 
     public int getId() {
         return id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -26,15 +43,19 @@ public class DeviceType {
         DeviceType type = (DeviceType) o;
 
         if (id != type.id) return false;
-        return title != null ? title.equals(type.title) : type.title == null;
+        return name != null ? name.equals(type.name) : type.name == null;
 
     }
 
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
+    }
+
+    public void addToCursor(MatrixCursor cursor) {
+        cursor.addRow(new Object[]{id, name});
     }
 
 }

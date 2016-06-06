@@ -4,7 +4,7 @@ public class MemoryDataSourceTestCase extends DataSourceTestCase {
 
     @Override
     protected DataSource createDataSource() {
-        return new MemoryDataSource();
+        return MemoryDataSource.getInstance();
     }
 
 }

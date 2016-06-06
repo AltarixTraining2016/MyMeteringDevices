@@ -12,4 +12,8 @@ public interface DataSource {
 
     void deleteAllMeteringDevices();
 
+    Cursor getDeviceTypes();
+
+    void deleteAllDeviceTypes();
+
 }
