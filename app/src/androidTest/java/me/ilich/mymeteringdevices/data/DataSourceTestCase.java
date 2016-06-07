@@ -74,13 +74,43 @@ public abstract class DataSourceTestCase extends TestCase {
 
         Cursor c;
 
-        c = dataSource.getMeteringDevices();
+        c = dataSource.getDeviceTypes();
         assertNotNull(c);
         c.close();
 
         dataSource.deleteAllDeviceTypes();
 
-        c = dataSource.getMeteringDevices();
+        c = dataSource.getDeviceTypes();
+        assertEquals(0, c.getCount());
+        c.close();
+
+        String title1 = "type1";
+        DeviceType t1 = new DeviceType(title1);
+        dataSource.addDeviceType(new DeviceType(title1));
+
+        c = dataSource.getDeviceTypes();
+        assertEquals(1, c.getCount());
+        c.moveToFirst();
+        DeviceType t2 = DeviceType.fromCursor(c);
+        c.close();
+
+        assertEquals(t1.getName(), t2.getName());
+
+        t2.setName("type1_A");
+
+        dataSource.updateDeviceType(t2);
+
+        c = dataSource.getDeviceTypes();
+        assertEquals(1, c.getCount());
+        c.moveToFirst();
+        DeviceType t3 = DeviceType.fromCursor(c);
+        c.close();
+
+        assertNotSame(t1.getName(), t3.getName());
+
+        dataSource.deleteDeviceType(t1.getId());
+
+        c = dataSource.getDeviceTypes();
         assertEquals(0, c.getCount());
         c.close();
 

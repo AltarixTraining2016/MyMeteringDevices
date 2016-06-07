@@ -16,4 +16,10 @@ public interface DataSource {
 
     void deleteAllDeviceTypes();
 
+    void addDeviceType(DeviceType deviceType);
+
+    void updateDeviceType(DeviceType deviceType);
+
+    void deleteDeviceType(int id);
+
 }

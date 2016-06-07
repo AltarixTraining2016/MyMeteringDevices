@@ -18,4 +18,9 @@
     <string name="menu_all_meteting">Все показания</string>
     <string name="title_about">О приложении</string>
     <string name="title_device_types">Типы устройств</string>
+    <string name="title_device_type_edit">Тип счётчика</string>
+    <string name="menu_save">Сохранить</string>
+    <string name="device_type_title_hint">Название</string>
+    <string name="error_field_required">Обязательное поле</string>
+
 </resources>

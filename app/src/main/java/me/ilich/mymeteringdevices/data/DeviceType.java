@@ -3,7 +3,9 @@ package me.ilich.mymeteringdevices.data;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 
-public class DeviceType {
+import java.io.Serializable;
+
+public class DeviceType implements Serializable {
 
     static String ID = "_id";
     static String NAME = "name";
@@ -20,7 +22,12 @@ public class DeviceType {
     }
 
     private final int id;
-    private final String name;
+    private String name;
+
+    public DeviceType(String name) {
+        this.id = -1;
+        this.name = name;
+    }
 
     public DeviceType(int id, String name) {
         this.id = id;
@@ -33,6 +40,10 @@ public class DeviceType {
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

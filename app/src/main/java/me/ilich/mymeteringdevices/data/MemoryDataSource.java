@@ -4,6 +4,7 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class MemoryDataSource implements DataSource {
@@ -66,6 +67,30 @@ public class MemoryDataSource implements DataSource {
     @Override
     public void deleteAllDeviceTypes() {
         deviceTypesList.clear();
+    }
+
+    @Override
+    public void addDeviceType(DeviceType deviceType) {
+        deviceTypesList.add(deviceType);
+    }
+
+    @Override
+    public void updateDeviceType(DeviceType deviceType) {
+        for (DeviceType d : deviceTypesList) {
+            if (d.getId() == deviceType.getId()) {
+                d.setName(deviceType.getName());
+            }
+        }
+    }
+
+    @Override
+    public void deleteDeviceType(int id) {
+        for (Iterator<DeviceType> iterator = deviceTypesList.iterator(); iterator.hasNext(); ) {
+            DeviceType deviceType = iterator.next();
+            if (deviceType.getId() == id) {
+                iterator.remove();
+            }
+        }
     }
 
 }
