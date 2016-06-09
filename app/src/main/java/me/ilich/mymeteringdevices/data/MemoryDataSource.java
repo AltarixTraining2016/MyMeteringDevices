@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import me.ilich.mymeteringdevices.data.dto.DeviceType;
+import me.ilich.mymeteringdevices.data.dto.MeteringDevice;
+
 public class MemoryDataSource implements DataSource {
 
     private static final MemoryDataSource instance = new MemoryDataSource();

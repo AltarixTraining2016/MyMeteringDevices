@@ -17,7 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.ilich.mymeteringdevices.MeteringDevicesApplication;
 import me.ilich.mymeteringdevices.R;
-import me.ilich.mymeteringdevices.data.DeviceType;
+import me.ilich.mymeteringdevices.data.dto.DeviceType;
 
 public class DeviceTypeEditFragment extends Fragment {
 

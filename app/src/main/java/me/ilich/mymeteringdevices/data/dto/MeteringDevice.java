@@ -1,35 +1,30 @@
-package me.ilich.mymeteringdevices.data;
+package me.ilich.mymeteringdevices.data.dto;
 
 import android.database.Cursor;
 import android.database.MatrixCursor;
 
 import java.io.Serializable;
 
-public class DeviceType implements Serializable {
+public class MeteringDevice implements Serializable {
 
     static String ID = "_id";
     static String NAME = "name";
 
-    public static final String[] COLUMN_NAMES = {
+    static String[] COLUMN_NAMES = {
             ID,
             NAME
     };
 
-    public static DeviceType fromCursor(Cursor cursor) {
+    public static MeteringDevice fromCursor(Cursor cursor) {
         int id = cursor.getInt(cursor.getColumnIndex(ID));
         String name = cursor.getString(cursor.getColumnIndex(NAME));
-        return new DeviceType(id, name);
+        return new MeteringDevice(id, name);
     }
 
     private final int id;
-    private String name;
+    private final String name;
 
-    public DeviceType(String name) {
-        this.id = -1;
-        this.name = name;
-    }
-
-    public DeviceType(int id, String name) {
+    public MeteringDevice(int id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -38,12 +33,8 @@ public class DeviceType implements Serializable {
         return id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    void addToCursor(MatrixCursor cursor) {
+        cursor.addRow(new Object[]{id, name});
     }
 
     @Override
@@ -51,10 +42,10 @@ public class DeviceType implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        DeviceType type = (DeviceType) o;
+        MeteringDevice device = (MeteringDevice) o;
 
-        if (id != type.id) return false;
-        return name != null ? name.equals(type.name) : type.name == null;
+        if (id != device.id) return false;
+        return name != null ? name.equals(device.name) : device.name == null;
 
     }
 
@@ -65,8 +56,8 @@ public class DeviceType implements Serializable {
         return result;
     }
 
-    public void addToCursor(MatrixCursor cursor) {
-        cursor.addRow(new Object[]{id, name});
+    @Override
+    public String toString() {
+        return "MeteringDevice " + id + " " + name;
     }
-
 }

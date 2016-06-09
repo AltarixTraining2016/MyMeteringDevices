@@ -2,6 +2,9 @@ package me.ilich.mymeteringdevices.data;
 
 import android.database.Cursor;
 
+import me.ilich.mymeteringdevices.data.dto.DeviceType;
+import me.ilich.mymeteringdevices.data.dto.MeteringDevice;
+
 public interface DataSource {
 
     Cursor getMeteringDevices();

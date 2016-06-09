@@ -2,6 +2,8 @@ package me.ilich.mymeteringdevices.data;
 
 import junit.framework.TestCase;
 
+import me.ilich.mymeteringdevices.data.dto.DeviceType;
+
 public class DeviceTypeTestCase extends TestCase {
 
     public void testEquals() {

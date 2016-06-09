@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -12,7 +11,7 @@ import android.view.MenuItem;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.ilich.mymeteringdevices.R;
-import me.ilich.mymeteringdevices.data.DeviceType;
+import me.ilich.mymeteringdevices.data.dto.DeviceType;
 
 public class DeviceTypeEditActivity extends AppCompatActivity implements DeviceTypeEditFragment.DeviceTypeEdit {
 

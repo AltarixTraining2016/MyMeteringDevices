@@ -4,6 +4,9 @@ import android.database.Cursor;
 
 import junit.framework.TestCase;
 
+import me.ilich.mymeteringdevices.data.dto.DeviceType;
+import me.ilich.mymeteringdevices.data.dto.MeteringDevice;
+
 public abstract class DataSourceTestCase extends TestCase {
 
     private DataSource dataSource;
