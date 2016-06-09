@@ -1,6 +1,5 @@
 package me.ilich.mymeteringdevices.ui;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,7 +14,7 @@ import butterknife.ButterKnife;
 import me.ilich.mymeteringdevices.BuildConfig;
 import me.ilich.mymeteringdevices.R;
 
-public class AboutFragment extends Fragment {
+public class AboutFragment extends Fragment implements Titleable {
 
     public static AboutFragment create() {
         return new AboutFragment();
@@ -35,7 +34,13 @@ public class AboutFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        versionTextView.setText(BuildConfig.VERSION_NAME);
+        String s = String.format(getString(R.string.about_text_3), BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE);
+        versionTextView.setText(s);
+    }
+
+    @Override
+    public String getTitle(Context context) {
+        return context.getString(R.string.title_about);
     }
 
 }

@@ -20,7 +20,7 @@ import me.ilich.mymeteringdevices.R;
 import me.ilich.mymeteringdevices.data.dto.DeviceType;
 import me.ilich.mymeteringdevices.tools.CursorRecyclerViewAdapter;
 
-public class DeviceTypesListFragment extends Fragment {
+public class DeviceTypesListFragment extends Fragment implements Titleable {
 
     public static DeviceTypesListFragment create() {
         return new DeviceTypesListFragment();
@@ -50,13 +50,18 @@ public class DeviceTypesListFragment extends Fragment {
         startActivity(DeviceTypeEditActivity.intent(getContext()));
     }
 
+    @Override
+    public String getTitle(Context context) {
+        return context.getString(R.string.title_device_types);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.name)
         TextView nameTextView;
 
         public ViewHolder(ViewGroup root) {
-            super(LayoutInflater.from(getContext()).inflate(R.layout.list_item_device_type, root, false));
+            super(LayoutInflater.from(getContext()).inflate(R.layout.listitem_device_type, root, false));
             ButterKnife.bind(this, itemView);
         }
 

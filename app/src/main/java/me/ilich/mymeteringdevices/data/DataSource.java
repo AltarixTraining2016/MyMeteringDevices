@@ -25,4 +25,6 @@ public interface DataSource {
 
     void deleteDeviceType(int id);
 
+    Cursor summaryGet();
+
 }

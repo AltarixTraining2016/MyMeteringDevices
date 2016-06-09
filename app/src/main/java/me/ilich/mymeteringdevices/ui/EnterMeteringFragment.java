@@ -11,10 +11,10 @@ import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import me.ilich.mymeteringdevices.R;
 
-public class AllMeteringFragment extends Fragment implements Titleable {
+public class EnterMeteringFragment extends Fragment implements Titleable {
 
-    public static AllMeteringFragment create() {
-        return new AllMeteringFragment();
+    public static EnterMeteringFragment create() {
+        return new EnterMeteringFragment();
     }
 
     @Nullable
@@ -27,7 +27,7 @@ public class AllMeteringFragment extends Fragment implements Titleable {
 
     @Override
     public String getTitle(Context context) {
-        return context.getString(R.string.title_all_metering);
+        return context.getString(R.string.title_enter_metering);
     }
 
 }

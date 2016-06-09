@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
-        if(savedInstanceState==null){
+        if (savedInstanceState == null) {
             replaceContent(SummaryFragment.create());
         }
 
@@ -103,30 +103,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 replaceContent(SummaryFragment.create());
                 b = true;
                 break;
+            case R.id.menu_enter_metering:
+                replaceContent(EnterMeteringFragment.create());
+                b = true;
+                break;
+            case R.id.menu_all_metering:
+                replaceContent(AllMeteringFragment.create());
+                b = true;
+                break;
             case R.id.menu_devices:
                 replaceContent(MeteringDevicesListFragment.create());
                 b = true;
                 break;
             case R.id.menu_device_types:
                 replaceContent(DeviceTypesListFragment.create());
-                setTitle(R.string.title_device_types);
                 b = true;
                 break;
             case R.id.menu_about:
                 replaceContent(AboutFragment.create());
-                setTitle(R.string.title_about);
                 b = true;
                 break;
             default:
                 b = false;
                 break;
         }
-        drawerLayout.closeDrawers();
+        if (b) {
+            drawerLayout.closeDrawers();
+        }
         return b;
     }
 
     private void replaceContent(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.container_content, fragment).commit();
+        if (fragment instanceof Titleable) {
+            String title = ((Titleable) fragment).getTitle(this);
+            setTitle(title);
+        }
     }
 
 }

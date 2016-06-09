@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">Счётчики</string>
     <string name="about_text_1">Мои счётчики</string>
-    <string name="about_text_2">Сбор и хранение информации о приборах учёта</string>
+    <string name="about_text_2">Сбор и хранение информации\nо приборах учёта</string>
+    <string name="about_text_3">Версия %1$s (%2$s)</string>
     <string name="title_activity_navigation">NavigationActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -22,5 +23,10 @@
     <string name="menu_save">Сохранить</string>
     <string name="device_type_title_hint">Название</string>
     <string name="error_field_required">Обязательное поле</string>
+    <string name="under_construction">В разработке</string>
+    <string name="title_summary">Сводка</string>
+    <string name="title_enter_metering">Ввод показаний</string>
+    <string name="title_all_metering">Все показания</string>
+    <string name="title_metering_devices_list">Мои счётчики</string>
 
 </resources>

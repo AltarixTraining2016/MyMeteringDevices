@@ -9,6 +9,7 @@ import java.util.List;
 
 import me.ilich.mymeteringdevices.data.dto.DeviceType;
 import me.ilich.mymeteringdevices.data.dto.MeteringDevice;
+import me.ilich.mymeteringdevices.data.dto.Summary;
 
 public class MemoryDataSource implements DataSource {
 
@@ -94,6 +95,14 @@ public class MemoryDataSource implements DataSource {
                 iterator.remove();
             }
         }
+    }
+
+    @Override
+    public Cursor summaryGet() {
+        MatrixCursor c = new MatrixCursor(Summary.COLUMN_NAMES);
+        c.addRow(new Object[]{"Газ", "5", "120", "22.10.2016"});
+        c.addRow(new Object[]{"Горячая вода", "245", "12000", "20.10.2016"});
+        return c;
     }
 
 }

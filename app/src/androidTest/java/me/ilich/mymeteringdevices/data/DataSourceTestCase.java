@@ -119,4 +119,12 @@ public abstract class DataSourceTestCase extends TestCase {
 
     }
 
+    public void testSummary() {
+
+        Cursor c = dataSource.summaryGet();
+        assertNotNull(c);
+        c.close();
+
+    }
+
 }

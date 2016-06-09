@@ -2,6 +2,7 @@ package me.ilich.mymeteringdevices.data.dto;
 
 import android.database.Cursor;
 import android.database.MatrixCursor;
+import android.support.annotation.VisibleForTesting;
 
 import java.io.Serializable;
 
@@ -10,7 +11,7 @@ public class MeteringDevice implements Serializable {
     static String ID = "_id";
     static String NAME = "name";
 
-    static String[] COLUMN_NAMES = {
+    public static String[] COLUMN_NAMES = {
             ID,
             NAME
     };
@@ -33,7 +34,8 @@ public class MeteringDevice implements Serializable {
         return id;
     }
 
-    void addToCursor(MatrixCursor cursor) {
+    @VisibleForTesting
+    public void addToCursor(MatrixCursor cursor) {
         cursor.addRow(new Object[]{id, name});
     }
 
