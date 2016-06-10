@@ -28,5 +28,9 @@
     <string name="title_enter_metering">Ввод показаний</string>
     <string name="title_all_metering">Все показания</string>
     <string name="title_metering_devices_list">Мои счётчики</string>
+    <string name="empty" />
+    <string name="menu_view">Просмотреть</string>
+    <string name="menu_edit">Редактировать</string>
+    <string name="menu_delete">Удалить</string>
 
 </resources>

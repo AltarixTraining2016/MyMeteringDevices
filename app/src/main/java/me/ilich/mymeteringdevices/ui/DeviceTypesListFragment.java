@@ -6,10 +6,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -60,6 +63,9 @@ public class DeviceTypesListFragment extends Fragment implements Titleable {
         @BindView(R.id.name)
         TextView nameTextView;
 
+        @BindView(R.id.show_context_menu)
+        ImageView contextMenuImageView;
+
         public ViewHolder(ViewGroup root) {
             super(LayoutInflater.from(getContext()).inflate(R.layout.listitem_device_type, root, false));
             ButterKnife.bind(this, itemView);
@@ -71,6 +77,15 @@ public class DeviceTypesListFragment extends Fragment implements Titleable {
                 @Override
                 public void onClick(View v) {
                     startActivity(DeviceTypeEditActivity.intent(getContext(), deviceType));
+                }
+            });
+            contextMenuImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PopupMenu popup = new PopupMenu(getContext(), v);
+                    MenuInflater inflater = popup.getMenuInflater();
+                    inflater.inflate(R.menu.menu_context_device_type, popup.getMenu());
+                    popup.show();
                 }
             });
         }
