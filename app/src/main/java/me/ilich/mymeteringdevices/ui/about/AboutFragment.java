@@ -1,4 +1,4 @@
-package me.ilich.mymeteringdevices.ui;
+package me.ilich.mymeteringdevices.ui.about;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.ilich.mymeteringdevices.BuildConfig;
 import me.ilich.mymeteringdevices.R;
+import me.ilich.mymeteringdevices.ui.Titleable;
 
 public class AboutFragment extends Fragment implements Titleable {
 

@@ -15,6 +15,12 @@ import android.view.View;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.ilich.mymeteringdevices.R;
+import me.ilich.mymeteringdevices.ui.about.AboutFragment;
+import me.ilich.mymeteringdevices.ui.devices.AllMeteringFragment;
+import me.ilich.mymeteringdevices.ui.devices.DevicesListFragment;
+import me.ilich.mymeteringdevices.ui.types.DeviceTypesListFragment;
+import me.ilich.mymeteringdevices.ui.meterings.EnterMeteringFragment;
+import me.ilich.mymeteringdevices.ui.summary.SummaryFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -112,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 b = true;
                 break;
             case R.id.menu_devices:
-                replaceContent(MeteringDevicesListFragment.create());
+                replaceContent(DevicesListFragment.create());
                 b = true;
                 break;
             case R.id.menu_device_types:

@@ -1,4 +1,4 @@
-package me.ilich.mymeteringdevices.ui;
+package me.ilich.mymeteringdevices.ui.types;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,7 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.ilich.mymeteringdevices.MeteringDevicesApplication;
 import me.ilich.mymeteringdevices.R;
-import me.ilich.mymeteringdevices.data.dto.DeviceType;
+import me.ilich.mymeteringdevices.data.dto.Type;
 
 public class DeviceTypeEditFragment extends Fragment {
 
@@ -27,7 +27,7 @@ public class DeviceTypeEditFragment extends Fragment {
         return new DeviceTypeEditFragment();
     }
 
-    public static DeviceTypeEditFragment create(DeviceType deviceType) {
+    public static DeviceTypeEditFragment create(Type deviceType) {
         DeviceTypeEditFragment fragment = new DeviceTypeEditFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(ARG_DEVICE_TYPE, deviceType);
@@ -36,7 +36,7 @@ public class DeviceTypeEditFragment extends Fragment {
     }
 
     @Nullable
-    DeviceType deviceType;
+    Type deviceType;
 
     @BindView(R.id.device_type_title_wrapper)
     TextInputLayout deviceTypeTitleInputLayout;
@@ -49,7 +49,7 @@ public class DeviceTypeEditFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         if (getArguments() != null) {
-            deviceType = (DeviceType) getArguments().getSerializable(ARG_DEVICE_TYPE);
+            deviceType = (Type) getArguments().getSerializable(ARG_DEVICE_TYPE);
         }
     }
 
@@ -85,12 +85,12 @@ public class DeviceTypeEditFragment extends Fragment {
                 if (TextUtils.isEmpty(name)) {
                     deviceTypeTitleInputLayout.setError(getString(R.string.error_field_required));
                 } else {
-                    final DeviceType newDeviceType;
+                    final Type newDeviceType;
                     if (deviceType == null) {
-                        newDeviceType = new DeviceType(name);
+                        newDeviceType = new Type(name);
                         MeteringDevicesApplication.getDataSource().addDeviceType(newDeviceType);
                     } else {
-                        newDeviceType = new DeviceType(deviceType.getId(), name);
+                        newDeviceType = new Type(deviceType.getId(), name);
                         MeteringDevicesApplication.getDataSource().updateDeviceType(newDeviceType);
                     }
                     ((DeviceTypeEdit) getActivity()).onDeviceTypeEdited(newDeviceType);
@@ -105,7 +105,7 @@ public class DeviceTypeEditFragment extends Fragment {
 
     public interface DeviceTypeEdit {
 
-        void onDeviceTypeEdited(DeviceType deviceType);
+        void onDeviceTypeEdited(Type deviceType);
 
     }
 

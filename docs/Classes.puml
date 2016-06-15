@@ -1,0 +1,25 @@
+@startuml
+
+class Type {
+int _id
+String name
+}
+
+class Device {
+int _id
+String name
+Type type
+}
+
+class Metering {
+int _id
+Date creationDate
+}
+
+class Summary {
+}
+
+Type "1" --o Device
+Device "1" --o Metering
+
+@enduml

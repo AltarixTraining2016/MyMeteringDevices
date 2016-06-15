@@ -1,4 +1,4 @@
-package me.ilich.mymeteringdevices.ui;
+package me.ilich.mymeteringdevices.ui.types;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -20,8 +20,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.ilich.mymeteringdevices.MeteringDevicesApplication;
 import me.ilich.mymeteringdevices.R;
-import me.ilich.mymeteringdevices.data.dto.DeviceType;
+import me.ilich.mymeteringdevices.data.dto.Type;
 import me.ilich.mymeteringdevices.tools.CursorRecyclerViewAdapter;
+import me.ilich.mymeteringdevices.ui.Titleable;
 
 public class DeviceTypesListFragment extends Fragment implements Titleable {
 
@@ -71,7 +72,7 @@ public class DeviceTypesListFragment extends Fragment implements Titleable {
             ButterKnife.bind(this, itemView);
         }
 
-        public void bind(final DeviceType deviceType) {
+        public void bind(final Type deviceType) {
             nameTextView.setText(deviceType.getName());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -84,7 +85,7 @@ public class DeviceTypesListFragment extends Fragment implements Titleable {
                 public void onClick(View v) {
                     PopupMenu popup = new PopupMenu(getContext(), v);
                     MenuInflater inflater = popup.getMenuInflater();
-                    inflater.inflate(R.menu.menu_context_device_type, popup.getMenu());
+                    inflater.inflate(R.menu.menu_context_type, popup.getMenu());
                     popup.show();
                 }
             });
@@ -105,7 +106,7 @@ public class DeviceTypesListFragment extends Fragment implements Titleable {
 
         @Override
         public void onBindViewHolder(ViewHolder viewHolder, Cursor cursor) {
-            DeviceType deviceType = DeviceType.fromCursor(cursor);
+            Type deviceType = Type.fromCursor(cursor);
             viewHolder.bind(deviceType);
         }
 

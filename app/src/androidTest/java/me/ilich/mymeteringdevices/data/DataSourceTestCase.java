@@ -4,8 +4,11 @@ import android.database.Cursor;
 
 import junit.framework.TestCase;
 
-import me.ilich.mymeteringdevices.data.dto.DeviceType;
-import me.ilich.mymeteringdevices.data.dto.MeteringDevice;
+import java.util.Date;
+
+import me.ilich.mymeteringdevices.data.dto.Device;
+import me.ilich.mymeteringdevices.data.dto.Metering;
+import me.ilich.mymeteringdevices.data.dto.Type;
 
 public abstract class DataSourceTestCase extends TestCase {
 
@@ -19,58 +22,68 @@ public abstract class DataSourceTestCase extends TestCase {
 
     protected abstract DataSource createDataSource();
 
-    public void testMeteringDevicesListNotNull() {
-        Cursor c = dataSource.getMeteringDevices();
+    private void assertCursorSizeAndClose(Cursor cursor, int expectedSize) {
+        assertNotNull(cursor);
+        assertEquals(expectedSize, cursor.getCount());
+        cursor.close();
+    }
+
+    private void assertCursorContainsAndClose(Cursor cursor, Metering... meterings) {
+        assertNotNull(cursor);
+        assertEquals(meterings.length, cursor.getCount());
+        assertTrue(cursor.moveToFirst());
+        int i = 0;
+        do {
+            Metering actualMetering = Metering.fromCursor(cursor);
+            Metering expectedMetering = meterings[i];
+            assertEquals(expectedMetering.getDate().getTime(), actualMetering.getDate().getTime());
+            assertEquals(expectedMetering.getValue(), actualMetering.getValue());
+            i++;
+        } while (cursor.moveToNext());
+        cursor.close();
+    }
+
+    public void testDecices() {
+
+        Cursor c;
+
+        c = dataSource.devicesGet();
         assertNotNull(c);
         c.close();
-    }
 
-    public void testMeteringDevicesClear() {
-        dataSource.deleteAllMeteringDevices();
-        Cursor c = dataSource.getMeteringDevices();
-        assertEquals(0, c.getCount());
-        c.close();
-    }
+        dataSource.devicesClear();
+        assertCursorSizeAndClose(dataSource.devicesGet(), 0);
 
-    public void testMeteringDevicesAdd() {
-        dataSource.deleteAllMeteringDevices();
-        MeteringDevice device1 = new MeteringDevice(1, "device 1");
+        Device device1 = new Device(1, "device 1");
 
-        dataSource.addMeteringDevice(device1);
+        dataSource.devicesChange(device1);
 
-        Cursor c2 = dataSource.getMeteringDevices();
+        Cursor c2 = dataSource.devicesGet();
         assertEquals(1, c2.getCount());
         c2.moveToFirst();
-        MeteringDevice actualDevice = MeteringDevice.fromCursor(c2);
+        Device actualDevice = Device.fromCursor(c2);
         c2.close();
 
         assertEquals(device1, actualDevice);
-    }
 
-    public void testMeteringDevicesDeleteById() {
-        dataSource.deleteAllMeteringDevices();
-        MeteringDevice device1 = new MeteringDevice(1, "device 1");
+        dataSource.devicesClear();
 
-        dataSource.addMeteringDevice(device1);
-        dataSource.deleteMeteringDevice(device1.getId());
+        dataSource.devicesChange(device1);
+        dataSource.devicesDelete(device1.getId());
 
-        Cursor c2 = dataSource.getMeteringDevices();
+        c2 = dataSource.devicesGet();
         assertEquals(0, c2.getCount());
         c2.close();
 
-    }
 
-    public void testMeteringDevicesDeleteAll() {
-        dataSource.deleteAllMeteringDevices();
-        MeteringDevice device1 = new MeteringDevice(1, "device 1");
+        dataSource.devicesClear();
 
-        dataSource.addMeteringDevice(device1);
-        dataSource.deleteAllMeteringDevices();
+        dataSource.devicesChange(device1);
+        dataSource.devicesClear();
 
-        Cursor c2 = dataSource.getMeteringDevices();
+        c2 = dataSource.devicesGet();
         assertEquals(0, c2.getCount());
         c2.close();
-
     }
 
     public void testDeviceTypes() {
@@ -88,13 +101,13 @@ public abstract class DataSourceTestCase extends TestCase {
         c.close();
 
         String title1 = "type1";
-        DeviceType t1 = new DeviceType(title1);
-        dataSource.addDeviceType(new DeviceType(title1));
+        Type t1 = new Type(title1);
+        dataSource.addDeviceType(new Type(title1));
 
         c = dataSource.getDeviceTypes();
         assertEquals(1, c.getCount());
         c.moveToFirst();
-        DeviceType t2 = DeviceType.fromCursor(c);
+        Type t2 = Type.fromCursor(c);
         c.close();
 
         assertEquals(t1.getName(), t2.getName());
@@ -106,7 +119,7 @@ public abstract class DataSourceTestCase extends TestCase {
         c = dataSource.getDeviceTypes();
         assertEquals(1, c.getCount());
         c.moveToFirst();
-        DeviceType t3 = DeviceType.fromCursor(c);
+        Type t3 = Type.fromCursor(c);
         c.close();
 
         assertNotSame(t1.getName(), t3.getName());
@@ -124,6 +137,37 @@ public abstract class DataSourceTestCase extends TestCase {
         Cursor c = dataSource.summaryGet();
         assertNotNull(c);
         c.close();
+
+    }
+
+    public void testMeterings() {
+        Cursor c;
+
+        c = dataSource.meteringGet();
+        assertNotNull(c);
+        c.close();
+
+        dataSource.meteringClear();
+        assertCursorSizeAndClose(dataSource.meteringGet(), 0);
+
+        Date date1 = new Date();
+        double value1 = 100;
+        double value2 = 200;
+        Metering metering1 = new Metering(-1, date1, value2);
+
+        dataSource.meteringChange(metering1);
+        assertCursorContainsAndClose(dataSource.meteringGet(), metering1);
+
+        c = dataSource.meteringGet();
+        c.moveToFirst();
+        Metering metering2 = Metering.fromCursor(c);
+        c.close();
+        Metering metering3 = new Metering(metering2.getId(), date1, value2);
+        dataSource.meteringChange(metering3);
+        assertCursorContainsAndClose(dataSource.meteringGet(), metering3);
+
+        dataSource.meteringClear();
+        assertCursorSizeAndClose(dataSource.meteringGet(), 0);
 
     }
 

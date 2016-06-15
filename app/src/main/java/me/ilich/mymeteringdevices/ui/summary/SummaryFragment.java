@@ -1,4 +1,4 @@
-package me.ilich.mymeteringdevices.ui;
+package me.ilich.mymeteringdevices.ui.summary;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -17,6 +17,7 @@ import me.ilich.mymeteringdevices.MeteringDevicesApplication;
 import me.ilich.mymeteringdevices.R;
 import me.ilich.mymeteringdevices.data.dto.Summary;
 import me.ilich.mymeteringdevices.tools.CursorRecyclerViewAdapter;
+import me.ilich.mymeteringdevices.ui.Titleable;
 
 public class SummaryFragment extends Fragment implements Titleable {
 

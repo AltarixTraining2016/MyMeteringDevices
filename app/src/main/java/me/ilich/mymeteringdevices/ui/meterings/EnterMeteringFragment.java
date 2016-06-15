@@ -1,4 +1,4 @@
-package me.ilich.mymeteringdevices.ui;
+package me.ilich.mymeteringdevices.ui.meterings;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,11 +10,12 @@ import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
 import me.ilich.mymeteringdevices.R;
+import me.ilich.mymeteringdevices.ui.Titleable;
 
-public class MeteringDevicesListFragment extends Fragment implements Titleable {
+public class EnterMeteringFragment extends Fragment implements Titleable {
 
-    public static MeteringDevicesListFragment create() {
-        return new MeteringDevicesListFragment();
+    public static EnterMeteringFragment create() {
+        return new EnterMeteringFragment();
     }
 
     @Nullable
@@ -27,7 +28,7 @@ public class MeteringDevicesListFragment extends Fragment implements Titleable {
 
     @Override
     public String getTitle(Context context) {
-        return context.getString(R.string.title_metering_devices_list);
+        return context.getString(R.string.title_enter_metering);
     }
 
 }

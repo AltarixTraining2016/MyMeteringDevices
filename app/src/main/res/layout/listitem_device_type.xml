@@ -3,17 +3,14 @@
     style="@style/Ripple"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/space_edge">
+    android:padding="@dimen/space_16dp">
 
     <ImageView
         android:id="@+id/show_context_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/ImageView.More"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:contentDescription="@string/empty"
-        android:src="@drawable/ic_more_vert_black_24dp"
-        android:tint="@android:color/primary_text_light" />
+        android:contentDescription="@string/empty" />
 
     <TextView
         android:id="@+id/name"

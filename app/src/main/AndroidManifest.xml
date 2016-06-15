@@ -19,7 +19,7 @@
         </activity>
 
         <activity
-            android:name=".ui.DeviceTypeEditActivity"
+            android:name=".ui.types.DeviceTypeEditActivity"
             android:label="@string/title_device_type_edit"
             android:parentActivityName=".ui.MainActivity">
             <meta-data

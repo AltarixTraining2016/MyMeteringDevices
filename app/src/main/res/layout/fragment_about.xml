@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="@dimen/space_edge">
+    android:padding="@dimen/space_16dp">
 
     <TextView
         style="@android:style/TextAppearance.DeviceDefault.Large"

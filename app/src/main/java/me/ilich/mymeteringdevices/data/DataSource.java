@@ -2,29 +2,38 @@ package me.ilich.mymeteringdevices.data;
 
 import android.database.Cursor;
 
-import me.ilich.mymeteringdevices.data.dto.DeviceType;
-import me.ilich.mymeteringdevices.data.dto.MeteringDevice;
+import me.ilich.mymeteringdevices.data.dto.Device;
+import me.ilich.mymeteringdevices.data.dto.Metering;
+import me.ilich.mymeteringdevices.data.dto.Type;
 
 public interface DataSource {
 
-    Cursor getMeteringDevices();
+    Cursor devicesGet();
 
-    void addMeteringDevice(MeteringDevice meteringDevice);
+    void devicesChange(Device meteringDevice);
 
-    void deleteMeteringDevice(int id);
+    void devicesDelete(int id);
 
-    void deleteAllMeteringDevices();
+    void devicesClear();
 
     Cursor getDeviceTypes();
 
     void deleteAllDeviceTypes();
 
-    void addDeviceType(DeviceType deviceType);
+    void addDeviceType(Type deviceType);
 
-    void updateDeviceType(DeviceType deviceType);
+    void updateDeviceType(Type deviceType);
 
     void deleteDeviceType(int id);
 
     Cursor summaryGet();
+
+    Cursor meteringGet();
+
+    void meteringDelete(int id);
+
+    void meteringClear();
+
+    void meteringChange(Metering metering);
 
 }

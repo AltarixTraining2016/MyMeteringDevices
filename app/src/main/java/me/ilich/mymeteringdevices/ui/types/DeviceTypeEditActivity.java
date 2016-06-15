@@ -1,4 +1,4 @@
-package me.ilich.mymeteringdevices.ui;
+package me.ilich.mymeteringdevices.ui.types;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.ilich.mymeteringdevices.R;
-import me.ilich.mymeteringdevices.data.dto.DeviceType;
+import me.ilich.mymeteringdevices.data.dto.Type;
 
 public class DeviceTypeEditActivity extends AppCompatActivity implements DeviceTypeEditFragment.DeviceTypeEdit {
 
@@ -21,7 +21,7 @@ public class DeviceTypeEditActivity extends AppCompatActivity implements DeviceT
         return new Intent(context, DeviceTypeEditActivity.class);
     }
 
-    public static Intent intent(Context context, DeviceType deviceType) {
+    public static Intent intent(Context context, Type deviceType) {
         return new Intent(context, DeviceTypeEditActivity.class).putExtra(EXTRA_DEVICE_TYPE, deviceType);
     }
 
@@ -38,7 +38,7 @@ public class DeviceTypeEditActivity extends AppCompatActivity implements DeviceT
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        DeviceType deviceType = (DeviceType) getIntent().getSerializableExtra(EXTRA_DEVICE_TYPE);
+        Type deviceType = (Type) getIntent().getSerializableExtra(EXTRA_DEVICE_TYPE);
         if (deviceType == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.container_content, DeviceTypeEditFragment.create()).commit();
         } else {
@@ -62,7 +62,7 @@ public class DeviceTypeEditActivity extends AppCompatActivity implements DeviceT
     }
 
     @Override
-    public void onDeviceTypeEdited(DeviceType deviceType) {
+    public void onDeviceTypeEdited(Type deviceType) {
         finish();
     }
 
