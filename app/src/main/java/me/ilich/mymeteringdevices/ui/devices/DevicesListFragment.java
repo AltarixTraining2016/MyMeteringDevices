@@ -25,9 +25,10 @@ import me.ilich.mymeteringdevices.MeteringDevicesApplication;
 import me.ilich.mymeteringdevices.R;
 import me.ilich.mymeteringdevices.data.dto.Device;
 import me.ilich.mymeteringdevices.tools.CursorRecyclerViewAdapter;
+import me.ilich.mymeteringdevices.ui.MeteringFragment;
 import me.ilich.mymeteringdevices.ui.Titleable;
 
-public class DevicesListFragment extends Fragment implements Titleable {
+public class DevicesListFragment extends MeteringFragment implements Titleable {
 
     private static final int RESULT_CODE_DELETE = 1;
 
@@ -43,7 +44,7 @@ public class DevicesListFragment extends Fragment implements Titleable {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter = new Adapter(getContext(), MeteringDevicesApplication.getDataSource().devicesGet());
+        adapter = new Adapter(getContext(), getDataSource().devicesGet());
     }
 
     @Nullable
@@ -71,7 +72,7 @@ public class DevicesListFragment extends Fragment implements Titleable {
         switch (requestCode) {
             case RESULT_CODE_DELETE:
                 if (resultCode == Activity.RESULT_OK) {
-                    adapter.swapCursor(MeteringDevicesApplication.getDataSource().devicesGet());
+                    adapter.swapCursor(getDataSource().devicesGet());
                 }
                 break;
             default:

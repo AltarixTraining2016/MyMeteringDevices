@@ -12,8 +12,9 @@ import android.support.v7.app.AppCompatDialogFragment;
 import me.ilich.mymeteringdevices.MeteringDevicesApplication;
 import me.ilich.mymeteringdevices.R;
 import me.ilich.mymeteringdevices.data.dto.Device;
+import me.ilich.mymeteringdevices.ui.MeteringDialogFragment;
 
-public class DeviceDeleteDialogFragment extends AppCompatDialogFragment {
+public class DeviceDeleteDialogFragment extends MeteringDialogFragment {
 
     private static final String ARG_DEVICE = "device";
 
@@ -43,7 +44,7 @@ public class DeviceDeleteDialogFragment extends AppCompatDialogFragment {
                 setPositiveButton(R.string.dialog_button_delete, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        MeteringDevicesApplication.getDataSource().devicesDelete(device.getId());
+                        getDataSource().devicesDelete(device.getId());
                         getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, null);
                     }
                 }).
