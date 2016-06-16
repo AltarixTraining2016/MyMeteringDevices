@@ -1,6 +1,7 @@
 package me.ilich.mymeteringdevices.data;
 
 import android.database.Cursor;
+import android.database.DataSetObserver;
 import android.database.MatrixCursor;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class MemoryDataSource implements DataSource {
 
     @Override
     public Cursor devicesGet() {
-        MatrixCursor cursor = new MatrixCursor(Device.COLUMN_NAMES);
+        final MatrixCursor cursor = new MatrixCursor(Device.COLUMN_NAMES);
         for (Device meteringDevice : deviceList) {
             meteringDevice.addToCursor(cursor);
         }

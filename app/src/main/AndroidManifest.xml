@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="me.ilich.mymeteringdevices">
 
     <application
@@ -20,12 +19,11 @@
 
         <activity
             android:name=".ui.types.DeviceTypeEditActivity"
-            android:label="@string/title_device_type_edit"
-            android:parentActivityName=".ui.MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.MainActivity" />
-        </activity>
+            android:label="@string/title_device_type_edit" />
+
+        <activity android:name=".ui.devices.DeviceViewActivity" />
+
+        <activity android:name=".ui.devices.DeviceEditActivity" />
 
     </application>
 

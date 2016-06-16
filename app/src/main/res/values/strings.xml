@@ -32,5 +32,9 @@
     <string name="menu_view">Просмотреть</string>
     <string name="menu_edit">Редактировать</string>
     <string name="menu_delete">Удалить</string>
+    <string name="dialog_title_delete_device">Удаление счётчика</string>
+    <string name="delete_device">Удалить счётчик "%1$s"?</string>
+    <string name="dialog_button_delete">Удалить</string>
+    <string name="dialog_button_cancel">Отмена</string>
 
 </resources>

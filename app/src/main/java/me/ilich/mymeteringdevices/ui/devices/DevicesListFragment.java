@@ -1,6 +1,8 @@
 package me.ilich.mymeteringdevices.ui.devices;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,12 +28,22 @@ import me.ilich.mymeteringdevices.ui.Titleable;
 
 public class DevicesListFragment extends Fragment implements Titleable {
 
+    private static final int RESULT_CODE_DELETE = 1;
+
     public static DevicesListFragment create() {
         return new DevicesListFragment();
     }
 
     @BindView(R.id.devices)
     RecyclerView recyclerView;
+
+    Adapter adapter;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        adapter = new Adapter(getContext(), MeteringDevicesApplication.getDataSource().devicesGet());
+    }
 
     @Nullable
     @Override
@@ -44,13 +56,27 @@ public class DevicesListFragment extends Fragment implements Titleable {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        recyclerView.setAdapter(new Adapter(getContext(), MeteringDevicesApplication.getDataSource().devicesGet()));
+        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     @Override
     public String getTitle(Context context) {
         return context.getString(R.string.title_metering_devices_list);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case RESULT_CODE_DELETE:
+                if (resultCode == Activity.RESULT_OK) {
+                    adapter.swapCursor(MeteringDevicesApplication.getDataSource().devicesGet());
+                }
+                break;
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+                break;
+        }
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements PopupMenu.OnMenuItemClickListener {
@@ -85,6 +111,12 @@ public class DevicesListFragment extends Fragment implements Titleable {
                     popup.show();
                 }
             });
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(DeviceViewActivity.intent(getContext(), device.getId()));
+                }
+            });
         }
 
         @Override
@@ -92,15 +124,17 @@ public class DevicesListFragment extends Fragment implements Titleable {
             final boolean r;
             switch (item.getItemId()) {
                 case R.id.menu_view:
-                    //TODO
+                    startActivity(DeviceViewActivity.intent(getContext(), device.getId()));
                     r = true;
                     break;
                 case R.id.menu_edit:
-                    //TODO
+                    startActivity(DeviceEditActivity.intent(getContext(), device.getId()));
                     r = true;
                     break;
                 case R.id.menu_delete:
-                    //TODO
+                    DeleteDeviceDialogFragment f = DeleteDeviceDialogFragment.create(device);
+                    f.setTargetFragment(DevicesListFragment.this, RESULT_CODE_DELETE);
+                    f.show(getFragmentManager(), "TAG");
                     r = true;
                     break;
                 default:
