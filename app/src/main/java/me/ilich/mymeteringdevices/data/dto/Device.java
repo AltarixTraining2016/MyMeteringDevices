@@ -6,7 +6,7 @@ import android.support.annotation.VisibleForTesting;
 
 import java.io.Serializable;
 
-public class Device implements Serializable {
+public class Device extends Dto {
 
     static String ID = "_id";
     static String NAME = "name";

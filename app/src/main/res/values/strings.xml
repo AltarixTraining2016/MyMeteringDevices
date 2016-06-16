@@ -36,5 +36,6 @@
     <string name="delete_device">Удалить счётчик "%1$s"?</string>
     <string name="dialog_button_delete">Удалить</string>
     <string name="dialog_button_cancel">Отмена</string>
+    <string name="device_name_hint">Название счётчика</string>
 
 </resources>

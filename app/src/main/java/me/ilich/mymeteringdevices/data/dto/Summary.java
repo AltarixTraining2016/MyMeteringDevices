@@ -4,7 +4,7 @@ import android.database.Cursor;
 
 import java.util.Date;
 
-public class Summary {
+public class Summary extends Dto {
 
     private static String TITLE = "title";
     private static String LAST_VALUE = "last_value";

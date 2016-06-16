@@ -7,7 +7,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,13 +15,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.ilich.mymeteringdevices.R;
 import me.ilich.mymeteringdevices.ui.about.AboutFragment;
-import me.ilich.mymeteringdevices.ui.devices.AllMeteringFragment;
 import me.ilich.mymeteringdevices.ui.devices.DevicesListFragment;
-import me.ilich.mymeteringdevices.ui.types.DeviceTypesListFragment;
+import me.ilich.mymeteringdevices.ui.meterings.AllMeteringFragment;
 import me.ilich.mymeteringdevices.ui.meterings.EnterMeteringFragment;
 import me.ilich.mymeteringdevices.ui.summary.SummaryFragment;
+import me.ilich.mymeteringdevices.ui.types.DeviceTypesListFragment;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends MeteringActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static final String STATE_TITLE = "title";
 
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (savedInstanceState == null) {
             replaceContent(SummaryFragment.create());
+        } else {
+            setTitle(savedInstanceState.getString(STATE_TITLE));
         }
 
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
@@ -87,6 +90,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(STATE_TITLE, String.valueOf(getTitle()));
     }
 
     @Override

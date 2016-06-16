@@ -51,7 +51,7 @@ public class DeviceTypesListFragment extends Fragment implements Titleable {
 
     @OnClick(R.id.add_device_type)
     void addDeviceType(View view) {
-        startActivity(DeviceTypeEditActivity.intent(getContext()));
+        startActivity(TypeEditActivity.intent(getContext()));
     }
 
     @Override
@@ -77,7 +77,7 @@ public class DeviceTypesListFragment extends Fragment implements Titleable {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(DeviceTypeEditActivity.intent(getContext(), deviceType));
+                    startActivity(TypeEditActivity.intent(getContext(), deviceType));
                 }
             });
             contextMenuImageView.setOnClickListener(new View.OnClickListener() {

@@ -4,11 +4,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.EditText;
 
-public class DeviceEditActivity extends AppCompatActivity {
+import butterknife.BindView;
+import me.ilich.mymeteringdevices.R;
+import me.ilich.mymeteringdevices.data.dto.Device;
+import me.ilich.mymeteringdevices.ui.BackActivity;
+
+public class DeviceEditActivity extends BackActivity {
 
     private final static String EXTRA_DEVICE_ID = "device_id";
+    private final static int NOT_SET = -1;
 
     public static Intent intent(Context context) {
         return new Intent(context, DeviceEditActivity.class);
@@ -20,11 +28,49 @@ public class DeviceEditActivity extends AppCompatActivity {
         return intent;
     }
 
+    private int deviceId;
+
+    @BindView(R.id.device_name)
+    EditText deviceNameEditText;
+
+    @Override
+    protected int getContentView() {
+        return R.layout.activity_device_edit;
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int deviceId = getIntent().getIntExtra(EXTRA_DEVICE_ID, -1);
+        deviceId = getIntent().getIntExtra(EXTRA_DEVICE_ID, NOT_SET);
+        if (deviceId != NOT_SET) {
+            Device device = getDataSource().deviceGet(deviceId);
+            if (device != null) {
+                deviceNameEditText.setText(device.getName());
+            }
+        }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_device_edit, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        final boolean b;
+        switch (item.getItemId()) {
+            case R.id.menu_save:
+                String name = deviceNameEditText.getText().toString();
+                Device newDevice = new Device(deviceId, name);
+                getDataSource().devicesChange(newDevice);
+                finish();
+                b = true;
+                break;
+            default:
+                b = super.onOptionsItemSelected(item);
+                break;
+        }
+        return b;
+    }
 }

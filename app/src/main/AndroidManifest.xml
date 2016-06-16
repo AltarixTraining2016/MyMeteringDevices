@@ -18,7 +18,7 @@
         </activity>
 
         <activity
-            android:name=".ui.types.DeviceTypeEditActivity"
+            android:name=".ui.types.TypeEditActivity"
             android:label="@string/title_device_type_edit" />
 
         <activity android:name=".ui.devices.DeviceViewActivity" />

@@ -12,7 +12,7 @@ import java.util.Locale;
 /**
  * Запись о покозаниях счётчика.
  */
-public class Metering {
+public class Metering extends Dto {
 
     private static final SimpleDateFormat DB_SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault());
 

@@ -3,9 +3,7 @@ package me.ilich.mymeteringdevices.data.dto;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 
-import java.io.Serializable;
-
-public class Type implements Serializable {
+public class Type extends Dto {
 
     static String ID = "_id";
     static String NAME = "name";

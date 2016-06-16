@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import me.ilich.mymeteringdevices.MeteringDevicesApplication;
 import me.ilich.mymeteringdevices.R;
 import me.ilich.mymeteringdevices.data.dto.Device;
@@ -34,7 +35,7 @@ public class DevicesListFragment extends Fragment implements Titleable {
         return new DevicesListFragment();
     }
 
-    @BindView(R.id.devices)
+    @BindView(R.id.devices_list)
     RecyclerView recyclerView;
 
     Adapter adapter;
@@ -77,6 +78,11 @@ public class DevicesListFragment extends Fragment implements Titleable {
                 super.onActivityResult(requestCode, resultCode, data);
                 break;
         }
+    }
+
+    @OnClick(R.id.device_add)
+    void onAddDeviceClick() {
+        startActivity(DeviceEditActivity.intent(getContext()));
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements PopupMenu.OnMenuItemClickListener {
@@ -132,7 +138,7 @@ public class DevicesListFragment extends Fragment implements Titleable {
                     r = true;
                     break;
                 case R.id.menu_delete:
-                    DeleteDeviceDialogFragment f = DeleteDeviceDialogFragment.create(device);
+                    DeviceDeleteDialogFragment f = DeviceDeleteDialogFragment.create(device);
                     f.setTargetFragment(DevicesListFragment.this, RESULT_CODE_DELETE);
                     f.show(getFragmentManager(), "TAG");
                     r = true;

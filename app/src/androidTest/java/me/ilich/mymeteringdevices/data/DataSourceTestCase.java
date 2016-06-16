@@ -43,7 +43,7 @@ public abstract class DataSourceTestCase extends TestCase {
         cursor.close();
     }
 
-    public void testDecices() {
+    public void testDevices() {
 
         Cursor c;
 
@@ -67,6 +67,19 @@ public abstract class DataSourceTestCase extends TestCase {
         assertEquals(device1, actualDevice);
 
         dataSource.devicesClear();
+
+        {
+            String name2 = "device 2";
+            Device device2 = new Device(-1, name2);
+            dataSource.devicesChange(device2);
+            assertCursorSizeAndClose(dataSource.devicesGet(), 1);
+            c = dataSource.devicesGet();
+            c.moveToFirst();
+            Device d = Device.fromCursor(c);
+            assertEquals(name2, d.getName());
+            assertNotSame(-1, d.getId());
+            dataSource.devicesClear();
+        }
 
         dataSource.devicesChange(device1);
         dataSource.devicesDelete(device1.getId());

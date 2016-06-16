@@ -13,12 +13,12 @@ import me.ilich.mymeteringdevices.MeteringDevicesApplication;
 import me.ilich.mymeteringdevices.R;
 import me.ilich.mymeteringdevices.data.dto.Device;
 
-public class DeleteDeviceDialogFragment extends AppCompatDialogFragment {
+public class DeviceDeleteDialogFragment extends AppCompatDialogFragment {
 
     private static final String ARG_DEVICE = "device";
 
-    public static DeleteDeviceDialogFragment create(Device device) {
-        DeleteDeviceDialogFragment f = new DeleteDeviceDialogFragment();
+    public static DeviceDeleteDialogFragment create(Device device) {
+        DeviceDeleteDialogFragment f = new DeviceDeleteDialogFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(ARG_DEVICE, device);
         f.setArguments(bundle);

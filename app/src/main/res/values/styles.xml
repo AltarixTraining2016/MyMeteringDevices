@@ -41,4 +41,9 @@
         <item name="android:padding">@dimen/space_16dp</item>
     </style>
 
+    <style name="Root.NoPadding">
+        <item name="android:background">@color/background</item>
+        <item name="android:padding">@dimen/space_0dp</item>
+    </style>
+
 </resources>

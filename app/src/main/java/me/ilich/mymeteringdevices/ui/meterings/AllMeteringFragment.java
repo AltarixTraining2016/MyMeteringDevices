@@ -1,4 +1,4 @@
-package me.ilich.mymeteringdevices.ui.devices;
+package me.ilich.mymeteringdevices.ui.meterings;
 
 import android.content.Context;
 import android.os.Bundle;

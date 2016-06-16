@@ -19,16 +19,16 @@ import me.ilich.mymeteringdevices.MeteringDevicesApplication;
 import me.ilich.mymeteringdevices.R;
 import me.ilich.mymeteringdevices.data.dto.Type;
 
-public class DeviceTypeEditFragment extends Fragment {
+public class TypeEditFragment extends Fragment {
 
     private static final String ARG_DEVICE_TYPE = "device type";
 
-    public static DeviceTypeEditFragment create() {
-        return new DeviceTypeEditFragment();
+    public static TypeEditFragment create() {
+        return new TypeEditFragment();
     }
 
-    public static DeviceTypeEditFragment create(Type deviceType) {
-        DeviceTypeEditFragment fragment = new DeviceTypeEditFragment();
+    public static TypeEditFragment create(Type deviceType) {
+        TypeEditFragment fragment = new TypeEditFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(ARG_DEVICE_TYPE, deviceType);
         fragment.setArguments(bundle);
@@ -56,7 +56,7 @@ public class DeviceTypeEditFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_device_type_edit, container, false);
+        View v = inflater.inflate(R.layout.fragment_type_edit, container, false);
         ButterKnife.bind(this, v);
         return v;
     }

@@ -10,6 +10,8 @@ public interface DataSource {
 
     Cursor devicesGet();
 
+    Device deviceGet(int deviceId);
+
     void devicesChange(Device meteringDevice);
 
     void devicesDelete(int id);
