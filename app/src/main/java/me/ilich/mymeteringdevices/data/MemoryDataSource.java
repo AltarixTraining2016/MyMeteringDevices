@@ -14,17 +14,11 @@ import me.ilich.mymeteringdevices.data.dto.Type;
 
 public class MemoryDataSource implements DataSource {
 
-    private static final MemoryDataSource instance = new MemoryDataSource();
-
-    public static MemoryDataSource getInstance() {
-        return instance;
-    }
-
     private List<Device> deviceList = new ArrayList<>();
     private List<Type> typesList = new ArrayList<>();
     private List<Metering> meteringsList = new ArrayList<>();
 
-    private MemoryDataSource() {
+    public MemoryDataSource() {
         typesList.add(new Type(1, "Газ"));
         typesList.add(new Type(2, "Вода"));
         typesList.add(new Type(4, "Электричество"));

@@ -1,6 +1,7 @@
 package me.ilich.mymeteringdevices.data;
 
 import android.database.Cursor;
+import android.test.AndroidTestCase;
 
 import junit.framework.TestCase;
 
@@ -10,7 +11,7 @@ import me.ilich.mymeteringdevices.data.dto.Device;
 import me.ilich.mymeteringdevices.data.dto.Metering;
 import me.ilich.mymeteringdevices.data.dto.Type;
 
-public abstract class DataSourceTestCase extends TestCase {
+public abstract class DataSourceTestCase extends AndroidTestCase {
 
     private DataSource dataSource;
 
@@ -137,7 +138,7 @@ public abstract class DataSourceTestCase extends TestCase {
 
         assertNotSame(t1.getName(), t3.getName());
 
-        dataSource.deleteDeviceType(t1.getId());
+        dataSource.deleteDeviceType(t3.getId());
 
         c = dataSource.getDeviceTypes();
         assertEquals(0, c.getCount());

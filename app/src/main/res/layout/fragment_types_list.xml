@@ -5,14 +5,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/device_types"
+        android:id="@+id/types_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentTop="true" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/add_device_type"
+        android:id="@+id/type_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:fabSize="normal"

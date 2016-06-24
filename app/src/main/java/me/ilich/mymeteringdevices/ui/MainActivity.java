@@ -19,7 +19,7 @@ import me.ilich.mymeteringdevices.ui.devices.DevicesListFragment;
 import me.ilich.mymeteringdevices.ui.meterings.AllMeteringFragment;
 import me.ilich.mymeteringdevices.ui.meterings.EnterMeteringFragment;
 import me.ilich.mymeteringdevices.ui.summary.SummaryFragment;
-import me.ilich.mymeteringdevices.ui.types.DeviceTypesListFragment;
+import me.ilich.mymeteringdevices.ui.types.TypesListFragment;
 
 public class MainActivity extends MeteringActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -131,7 +131,7 @@ public class MainActivity extends MeteringActivity implements NavigationView.OnN
                 b = true;
                 break;
             case R.id.menu_device_types:
-                replaceContent(DeviceTypesListFragment.create());
+                replaceContent(TypesListFragment.create());
                 b = true;
                 break;
             case R.id.menu_about:

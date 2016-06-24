@@ -16,7 +16,7 @@ public class MeteringDevicesApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        dataSource = MemoryDataSource.getInstance();
+        dataSource = new MemoryDataSource();
     }
 
 }
