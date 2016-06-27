@@ -62,7 +62,7 @@ public class DeviceEditActivity extends BackActivity {
         switch (item.getItemId()) {
             case R.id.menu_save:
                 String name = deviceNameEditText.getText().toString();
-                Device newDevice = new Device(deviceId, name);
+                Device newDevice = new Device(deviceId, name, 1); //TODO device type id
                 getDataSource().devicesChange(newDevice);
                 finish();
                 b = true;

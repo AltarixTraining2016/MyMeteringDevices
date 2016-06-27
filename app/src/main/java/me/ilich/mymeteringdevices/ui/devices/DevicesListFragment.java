@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -21,7 +20,6 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.ilich.mymeteringdevices.MeteringDevicesApplication;
 import me.ilich.mymeteringdevices.R;
 import me.ilich.mymeteringdevices.data.dto.Device;
 import me.ilich.mymeteringdevices.tools.CursorRecyclerViewAdapter;
@@ -44,7 +42,7 @@ public class DevicesListFragment extends MeteringFragment implements Titleable {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter = new Adapter(getContext(), getDataSource().devicesGet());
+        adapter = new Adapter(getContext(), getDataSource().devicesGetAll());
     }
 
     @Nullable
@@ -72,7 +70,7 @@ public class DevicesListFragment extends MeteringFragment implements Titleable {
         switch (requestCode) {
             case RESULT_CODE_DELETE:
                 if (resultCode == Activity.RESULT_OK) {
-                    adapter.swapCursor(getDataSource().devicesGet());
+                    adapter.swapCursor(getDataSource().devicesGetAll());
                 }
                 break;
             default:

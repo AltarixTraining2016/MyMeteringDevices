@@ -11,24 +11,38 @@ import me.ilich.mymeteringdevices.data.dto.Device;
 import me.ilich.mymeteringdevices.data.dto.Metering;
 import me.ilich.mymeteringdevices.data.dto.Summary;
 import me.ilich.mymeteringdevices.data.dto.Type;
+import me.ilich.mymeteringdevices.data.dto.Unit;
 
 public class MemoryDataSource implements DataSource {
 
+    private List<Unit> unitList = new ArrayList<>();
     private List<Device> deviceList = new ArrayList<>();
     private List<Type> typesList = new ArrayList<>();
     private List<Metering> meteringsList = new ArrayList<>();
 
     public MemoryDataSource() {
-        typesList.add(new Type(1, "Газ"));
-        typesList.add(new Type(2, "Вода"));
-        typesList.add(new Type(4, "Электричество"));
+        unitList.add(new Unit(1, "м3"));
+        unitList.add(new Unit(2, "кВт*ч"));
 
-        deviceList.add(new Device(1, "Горячая вода"));
-        deviceList.add(new Device(2, "Холодная вода"));
+        typesList.add(new Type(1, "Газ", 1));
+        typesList.add(new Type(2, "Вода", 1));
+        typesList.add(new Type(4, "Электричество", 2));
+
+        deviceList.add(new Device(1, "Горячая вода", 2));
+        deviceList.add(new Device(2, "Холодная вода", 2));
     }
 
     @Override
-    public Cursor devicesGet() {
+    public Cursor unitsGetAll() {
+        MatrixCursor matrixCursor = new MatrixCursor(Unit.COLUMN_NAMES);
+        for(Unit unit : unitList){
+            unit.addToCursor(matrixCursor);
+        }
+        return matrixCursor;
+    }
+
+    @Override
+    public Cursor devicesGetAll() {
         final MatrixCursor cursor = new MatrixCursor(Device.COLUMN_NAMES);
         for (Device meteringDevice : deviceList) {
             meteringDevice.addToCursor(cursor);
@@ -55,16 +69,16 @@ public class MemoryDataSource implements DataSource {
                 Device d = iterator.next();
                 if (d.getId() == device.getId()) {
                     iterator.remove();
-                    newDevice = new Device(d.getId(), device.getName());
+                    newDevice = new Device(d.getId(), device.getName(), device.getTypeId());
                     break;
                 }
             }
             if (newDevice == null) {
-                newDevice = new Device(device.getId(), device.getName());
+                newDevice = new Device(device.getId(), device.getName(), device.getTypeId());
             }
         }
         if (newDevice == null) {
-            newDevice = new Device(deviceList.size(), device.getName());
+            newDevice = new Device(deviceList.size(), device.getName(), device.getTypeId());
         }
         deviceList.add(newDevice);
     }
@@ -86,7 +100,7 @@ public class MemoryDataSource implements DataSource {
     }
 
     @Override
-    public Cursor getDeviceTypes() {
+    public Cursor typesGetAll() {
         MatrixCursor cursor = new MatrixCursor(Type.COLUMN_NAMES);
         for (Type deviceType : typesList) {
             deviceType.addToCursor(cursor);
@@ -95,21 +109,25 @@ public class MemoryDataSource implements DataSource {
     }
 
     @Override
-    public void deleteAllDeviceTypes() {
+    public void typesDeleteAll() {
         typesList.clear();
     }
 
     @Override
-    public void addDeviceType(Type deviceType) {
-        typesList.add(deviceType);
-    }
-
-    @Override
-    public void updateDeviceType(Type deviceType) {
-        for (Type d : typesList) {
-            if (d.getId() == deviceType.getId()) {
-                d.setName(deviceType.getName());
+    public void typeChange(Type newType) {
+        boolean contains = false;
+        Type oldType = null;
+        if (newType.getId() != Type.NOT_SET) {
+            for (Type currentType : typesList) {
+                if (currentType.getId() == newType.getId()) {
+                    contains = true;
+                    oldType = currentType;
+                }
             }
+        }
+        if (!contains) {
+            Type type = new Type(typesList.size(), newType.getName(), newType.getUnitId());
+            typesList.add(type);
         }
     }
 

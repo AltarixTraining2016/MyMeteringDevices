@@ -3,13 +3,12 @@ package me.ilich.mymeteringdevices.data;
 import android.database.Cursor;
 import android.test.AndroidTestCase;
 
-import junit.framework.TestCase;
-
 import java.util.Date;
 
 import me.ilich.mymeteringdevices.data.dto.Device;
 import me.ilich.mymeteringdevices.data.dto.Metering;
 import me.ilich.mymeteringdevices.data.dto.Type;
+import me.ilich.mymeteringdevices.data.dto.Unit;
 
 public abstract class DataSourceTestCase extends AndroidTestCase {
 
@@ -44,22 +43,97 @@ public abstract class DataSourceTestCase extends AndroidTestCase {
         cursor.close();
     }
 
+    public void testUnits() {
+        Cursor c = dataSource.unitsGetAll();
+        assertNotNull(c);
+        c.close();
+    }
+
+    public void testTypes() {
+        Cursor c;
+
+        c = dataSource.unitsGetAll();
+        c.moveToFirst();
+        Unit unit1 = Unit.fromCursor(c);
+        c.moveToNext();
+        Unit unit2 = Unit.fromCursor(c);
+        c.close();
+
+        c = dataSource.typesGetAll();
+        assertNotNull(c);
+        c.close();
+
+        dataSource.typesDeleteAll();
+
+        c = dataSource.typesGetAll();
+        assertEquals(0, c.getCount());
+        c.close();
+
+        String title1 = "type1";
+        Type t1 = new Type(title1, unit1.getId());
+        dataSource.typeChange(new Type(title1, unit1.getId()));
+
+        c = dataSource.typesGetAll();
+        assertEquals(1, c.getCount());
+        c.moveToFirst();
+        Type t2 = Type.fromCursor(c);
+        c.close();
+
+        assertEquals(t1.getName(), t2.getName());
+
+        dataSource.typeChange(t2);
+
+        c = dataSource.typesGetAll();
+        assertEquals(1, c.getCount());
+        c.moveToFirst();
+        Type t3 = Type.fromCursor(c);
+        c.close();
+
+        assertNotSame(t1.getName(), t3.getName());
+
+        dataSource.deleteDeviceType(t3.getId());
+
+        c = dataSource.typesGetAll();
+        assertEquals(0, c.getCount());
+        c.close();
+
+    }
+
     public void testDevices() {
 
         Cursor c;
 
-        c = dataSource.devicesGet();
+        c = dataSource.unitsGetAll();
+        c.moveToFirst();
+        Unit unit1 = Unit.fromCursor(c);
+        c.moveToNext();
+        Unit unit2 = Unit.fromCursor(c);
+        c.close();
+
+        Type type1 = new Type("type 1", unit1.getId());
+        Type type2 = new Type("type 2", unit2.getId());
+        dataSource.typeChange(type1);
+        dataSource.typeChange(type2);
+        c = dataSource.typesGetAll();
+        c.moveToFirst();
+        type1 = Type.fromCursor(c);
+        c.moveToNext();
+        type2 = Type.fromCursor(c);
+        c.close();
+
+
+        c = dataSource.devicesGetAll();
         assertNotNull(c);
         c.close();
 
         dataSource.devicesClear();
-        assertCursorSizeAndClose(dataSource.devicesGet(), 0);
+        assertCursorSizeAndClose(dataSource.devicesGetAll(), 0);
 
-        Device device1 = new Device(1, "device 1");
+        Device device1 = new Device(1, "device 1", type1.getId());
 
         dataSource.devicesChange(device1);
 
-        Cursor c2 = dataSource.devicesGet();
+        Cursor c2 = dataSource.devicesGetAll();
         assertEquals(1, c2.getCount());
         c2.moveToFirst();
         Device actualDevice = Device.fromCursor(c2);
@@ -71,10 +145,10 @@ public abstract class DataSourceTestCase extends AndroidTestCase {
 
         {
             String name2 = "device 2";
-            Device device2 = new Device(-1, name2);
+            Device device2 = new Device(name2, unit1.getId());
             dataSource.devicesChange(device2);
-            assertCursorSizeAndClose(dataSource.devicesGet(), 1);
-            c = dataSource.devicesGet();
+            assertCursorSizeAndClose(dataSource.devicesGetAll(), 1);
+            c = dataSource.devicesGetAll();
             c.moveToFirst();
             Device d = Device.fromCursor(c);
             assertEquals(name2, d.getName());
@@ -85,7 +159,7 @@ public abstract class DataSourceTestCase extends AndroidTestCase {
         dataSource.devicesChange(device1);
         dataSource.devicesDelete(device1.getId());
 
-        c2 = dataSource.devicesGet();
+        c2 = dataSource.devicesGetAll();
         assertEquals(0, c2.getCount());
         c2.close();
 
@@ -95,55 +169,9 @@ public abstract class DataSourceTestCase extends AndroidTestCase {
         dataSource.devicesChange(device1);
         dataSource.devicesClear();
 
-        c2 = dataSource.devicesGet();
+        c2 = dataSource.devicesGetAll();
         assertEquals(0, c2.getCount());
         c2.close();
-    }
-
-    public void testDeviceTypes() {
-
-        Cursor c;
-
-        c = dataSource.getDeviceTypes();
-        assertNotNull(c);
-        c.close();
-
-        dataSource.deleteAllDeviceTypes();
-
-        c = dataSource.getDeviceTypes();
-        assertEquals(0, c.getCount());
-        c.close();
-
-        String title1 = "type1";
-        Type t1 = new Type(title1);
-        dataSource.addDeviceType(new Type(title1));
-
-        c = dataSource.getDeviceTypes();
-        assertEquals(1, c.getCount());
-        c.moveToFirst();
-        Type t2 = Type.fromCursor(c);
-        c.close();
-
-        assertEquals(t1.getName(), t2.getName());
-
-        t2.setName("type1_A");
-
-        dataSource.updateDeviceType(t2);
-
-        c = dataSource.getDeviceTypes();
-        assertEquals(1, c.getCount());
-        c.moveToFirst();
-        Type t3 = Type.fromCursor(c);
-        c.close();
-
-        assertNotSame(t1.getName(), t3.getName());
-
-        dataSource.deleteDeviceType(t3.getId());
-
-        c = dataSource.getDeviceTypes();
-        assertEquals(0, c.getCount());
-        c.close();
-
     }
 
     public void testSummary() {
@@ -167,7 +195,7 @@ public abstract class DataSourceTestCase extends AndroidTestCase {
         Date date1 = new Date();
         double value1 = 100;
         double value2 = 200;
-        Metering metering1 = new Metering(-1, date1, value2);
+        Metering metering1 = new Metering(date1, value2);
 
         dataSource.meteringChange(metering1);
         assertCursorContainsAndClose(dataSource.meteringGet(), metering1);

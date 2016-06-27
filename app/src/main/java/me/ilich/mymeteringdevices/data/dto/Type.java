@@ -1,5 +1,6 @@
 package me.ilich.mymeteringdevices.data.dto;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 
@@ -7,29 +8,33 @@ public class Type extends Dto {
 
     static String ID = "_id";
     static String NAME = "name";
+    static String UNIT_ID = "unit_id";
 
     public static final String[] COLUMN_NAMES = {
             ID,
-            NAME
+            NAME,
+            UNIT_ID
     };
 
     public static Type fromCursor(Cursor cursor) {
         int id = cursor.getInt(cursor.getColumnIndex(ID));
         String name = cursor.getString(cursor.getColumnIndex(NAME));
-        return new Type(id, name);
+        int unitId = cursor.getInt(cursor.getColumnIndex(UNIT_ID));
+        return new Type(id, name, unitId);
     }
 
     private final int id;
-    private String name;
+    private final String name;
+    private final int unitId;
 
-    public Type(String name) {
-        this.id = -1;
-        this.name = name;
+    public Type(String name, int unitId) {
+        this(NOT_SET, name, unitId);
     }
 
-    public Type(int id, String name) {
+    public Type(int id, String name, int unitId) {
         this.id = id;
         this.name = name;
+        this.unitId = unitId;
     }
 
     public int getId() {
@@ -40,10 +45,6 @@ public class Type extends Dto {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -52,6 +53,7 @@ public class Type extends Dto {
         Type type = (Type) o;
 
         if (id != type.id) return false;
+        if (unitId != type.unitId) return false;
         return name != null ? name.equals(type.name) : type.name == null;
 
     }
@@ -60,11 +62,26 @@ public class Type extends Dto {
     public int hashCode() {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + unitId;
         return result;
     }
 
     public void addToCursor(MatrixCursor cursor) {
-        cursor.addRow(new Object[]{id, name});
+        cursor.addRow(new Object[]{id, name, unitId});
+    }
+
+    public int getUnitId() {
+        return unitId;
+    }
+
+    public ContentValues toContentValues() {
+        ContentValues cv = new ContentValues();
+        if (id != Type.NOT_SET) {
+            cv.put(ID, id);
+        }
+        cv.put(NAME, name);
+        cv.put(UNIT_ID, unitId);
+        return cv;
     }
 
 }

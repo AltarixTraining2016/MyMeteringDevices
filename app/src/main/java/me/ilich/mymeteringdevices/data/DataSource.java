@@ -8,7 +8,19 @@ import me.ilich.mymeteringdevices.data.dto.Type;
 
 public interface DataSource {
 
-    Cursor devicesGet();
+    Cursor unitsGetAll();
+
+
+    Cursor typesGetAll();
+
+    void typesDeleteAll();
+
+    void typeChange(Type deviceType);
+
+    void deleteDeviceType(int id);
+
+
+    Cursor devicesGetAll();
 
     Device deviceGet(int deviceId);
 
@@ -18,15 +30,6 @@ public interface DataSource {
 
     void devicesClear();
 
-    Cursor getDeviceTypes();
-
-    void deleteAllDeviceTypes();
-
-    void addDeviceType(Type deviceType);
-
-    void updateDeviceType(Type deviceType);
-
-    void deleteDeviceType(int id);
 
     Cursor summaryGet();
 

@@ -9,9 +9,13 @@ import me.ilich.mymeteringdevices.data.dto.Type;
 public class ProxyDataSource implements DataSource {
 
 
+    @Override
+    public Cursor unitsGetAll() {
+        return null;
+    }
 
     @Override
-    public Cursor devicesGet() {
+    public Cursor devicesGetAll() {
         return null;
     }
 
@@ -36,22 +40,17 @@ public class ProxyDataSource implements DataSource {
     }
 
     @Override
-    public Cursor getDeviceTypes() {
+    public Cursor typesGetAll() {
         return null;
     }
 
     @Override
-    public void deleteAllDeviceTypes() {
+    public void typesDeleteAll() {
 
     }
 
     @Override
-    public void addDeviceType(Type deviceType) {
-
-    }
-
-    @Override
-    public void updateDeviceType(Type deviceType) {
+    public void typeChange(Type deviceType) {
 
     }
 

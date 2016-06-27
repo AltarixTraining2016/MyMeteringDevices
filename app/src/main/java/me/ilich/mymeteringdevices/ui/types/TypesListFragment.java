@@ -43,7 +43,7 @@ public class TypesListFragment extends MeteringFragment implements Titleable {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Adapter adapter = new Adapter(getContext(), getDataSource().getDeviceTypes());
+        Adapter adapter = new Adapter(getContext(), getDataSource().typesGetAll());
         deviceTypesRecyclerView.setAdapter(adapter);
         deviceTypesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }

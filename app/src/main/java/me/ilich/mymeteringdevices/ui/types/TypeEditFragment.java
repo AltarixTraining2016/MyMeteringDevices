@@ -87,11 +87,11 @@ public class TypeEditFragment extends Fragment {
                 } else {
                     final Type newDeviceType;
                     if (deviceType == null) {
-                        newDeviceType = new Type(name);
-                        MeteringDevicesApplication.getDataSource().addDeviceType(newDeviceType);
+                        newDeviceType = new Type(name, 1); //TODO unit id
+                        MeteringDevicesApplication.getDataSource().typeChange(newDeviceType);
                     } else {
-                        newDeviceType = new Type(deviceType.getId(), name);
-                        MeteringDevicesApplication.getDataSource().updateDeviceType(newDeviceType);
+                        newDeviceType = new Type(deviceType.getId(), name, 1); //TODO unit id
+                        MeteringDevicesApplication.getDataSource().typeChange(newDeviceType);
                     }
                     ((DeviceTypeEdit) getActivity()).onDeviceTypeEdited(newDeviceType);
                 }

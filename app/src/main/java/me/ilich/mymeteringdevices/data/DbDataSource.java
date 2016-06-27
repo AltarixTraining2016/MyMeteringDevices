@@ -2,8 +2,11 @@ package me.ilich.mymeteringdevices.data;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.CancellationSignal;
+import android.support.annotation.VisibleForTesting;
 
 import me.ilich.mymeteringdevices.data.db.DatabaseHelper;
 import me.ilich.mymeteringdevices.data.dto.Device;
@@ -21,8 +24,13 @@ public class DbDataSource implements DataSource {
     }
 
     @Override
-    public Cursor devicesGet() {
-        return null;
+    public Cursor unitsGetAll() {
+        return db.rawQuery("SELECT _id, name FROM units ORDER BY name", null);
+    }
+
+    @Override
+    public Cursor devicesGetAll() {
+        return db.rawQuery("SELECT devices._id AS '_id', devices.name AS 'name', devices.device_type_id AS 'device_type_id', device_types.name AS 'device_type_name' FROM devices LEFT JOIN device_types ON device_types._id = devices.device_type_id ORDER BY devices.name", null);
     }
 
     @Override
@@ -32,42 +40,34 @@ public class DbDataSource implements DataSource {
 
     @Override
     public void devicesChange(Device meteringDevice) {
-
+        ContentValues cv = meteringDevice.toContentValues();
+        db.insertWithOnConflict("devices", null, cv, SQLiteDatabase.CONFLICT_REPLACE);
     }
 
     @Override
     public void devicesDelete(int id) {
-
+        db.execSQL("DELETE FROM devices WHERE _id = ?", new Object[]{id});
     }
 
     @Override
     public void devicesClear() {
-
+        db.execSQL("DELETE FROM devices");
     }
 
     @Override
-    public Cursor getDeviceTypes() {
-        return databaseHelper.getWritableDatabase().rawQuery("SELECT _id, name FROM device_types ORDER BY name", null);
+    public Cursor typesGetAll() {
+        return db.rawQuery("SELECT _id, name, unit_id FROM device_types ORDER BY name", null);
     }
 
     @Override
-    public void deleteAllDeviceTypes() {
-
+    public void typesDeleteAll() {
+        db.execSQL("DELETE FROM device_types");
     }
 
     @Override
-    public void addDeviceType(Type deviceType) {
-        ContentValues cv = new ContentValues();
-        if (deviceType.getId() != Type.NOT_SET) {
-            cv.put("_id", deviceType.getId());
-        }
-        cv.put("name", deviceType.getName());
-        databaseHelper.getWritableDatabase().insertWithOnConflict("device_types", null, cv, SQLiteDatabase.CONFLICT_REPLACE);
-    }
-
-    @Override
-    public void updateDeviceType(Type deviceType) {
-
+    public void typeChange(Type deviceType) {
+        ContentValues cv = deviceType.toContentValues();
+        db.insertWithOnConflict("device_types", null, cv, SQLiteDatabase.CONFLICT_REPLACE);
     }
 
     @Override
@@ -82,7 +82,7 @@ public class DbDataSource implements DataSource {
 
     @Override
     public Cursor meteringGet() {
-        return null;
+        return db.rawQuery("SELECT _id, created, measure, device_id FROM meterings", null);
     }
 
     @Override
@@ -100,6 +100,7 @@ public class DbDataSource implements DataSource {
 
     }
 
+    @VisibleForTesting
     public String getDbFileName() {
         return databaseHelper.getDatabaseName();
     }

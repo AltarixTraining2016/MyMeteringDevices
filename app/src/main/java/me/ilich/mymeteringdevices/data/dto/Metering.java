@@ -43,6 +43,10 @@ public class Metering extends Dto {
     private final Date date;
     private final double value;
 
+    public Metering(Date date, double value) {
+        this(NOT_SET, date, value);
+    }
+
     public Metering(int id, Date date, double value) {
         this.id = id;
         this.date = date;

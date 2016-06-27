@@ -1,0 +1,14 @@
+PRAGMA foreign_keys = ON;
+DROP TABLE IF EXISTS meterings;
+DROP TABLE IF EXISTS devices;
+DROP TABLE IF EXISTS device_types;
+DROP TABLE IF EXISTS units;
+CREATE TABLE units (_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL);
+INSERT INTO units (_id, name) VALUES (1, "м³");
+INSERT INTO units (_id, name) VALUES (2, "кВт·ч");
+CREATE TABLE device_types (_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, unit_id INTEGER, FOREIGN KEY(unit_id) REFERENCES units(_id));
+INSERT INTO device_types (name, unit_id) VALUES ("газ", 1);
+INSERT INTO device_types (name, unit_id) VALUES ("вода", 1);
+INSERT INTO device_types (name, unit_id) VALUES ("электричество", 2);
+CREATE TABLE devices (_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, device_type_id INTEGER, FOREIGN KEY(device_type_id) REFERENCES device_types(_id));
+CREATE TABLE meterings (_id INTEGER PRIMARY KEY AUTOINCREMENT, created TEXT NOT NULL, measure REAL NOT NULL, device_id INTEGER, FOREIGN KEY(device_id) REFERENCES devices(_id));
