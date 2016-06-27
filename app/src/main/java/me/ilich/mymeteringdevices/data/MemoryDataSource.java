@@ -35,7 +35,7 @@ public class MemoryDataSource implements DataSource {
     @Override
     public Cursor unitsGetAll() {
         MatrixCursor matrixCursor = new MatrixCursor(Unit.COLUMN_NAMES);
-        for(Unit unit : unitList){
+        for (Unit unit : unitList) {
             unit.addToCursor(matrixCursor);
         }
         return matrixCursor;
@@ -171,13 +171,13 @@ public class MemoryDataSource implements DataSource {
     @Override
     public void meteringChange(Metering metering) {
         if (metering.getId() == -1) {
-            Metering newMetering = new Metering(meteringsList.size(), metering.getDate(), metering.getValue());
+            Metering newMetering = new Metering(meteringsList.size(), metering.getDate(), metering.getValue(), metering.getDeviceId());
             meteringsList.add(newMetering);
         } else {
             for (Iterator<Metering> iterator = meteringsList.iterator(); iterator.hasNext(); ) {
                 Metering currentMetering = iterator.next();
                 if (currentMetering.getId() == metering.getId()) {
-                    Metering newMetering = new Metering(metering.getId(), metering.getDate(), metering.getValue());
+                    Metering newMetering = new Metering(metering.getId(), metering.getDate(), metering.getValue(), metering.getDeviceId());
                     iterator.remove();
                     meteringsList.add(newMetering);
                 }

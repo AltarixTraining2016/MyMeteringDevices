@@ -2,10 +2,8 @@ package me.ilich.mymeteringdevices.data;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.CancellationSignal;
 import android.support.annotation.VisibleForTesting;
 
 import me.ilich.mymeteringdevices.data.db.DatabaseHelper;
@@ -21,6 +19,11 @@ public class DbDataSource implements DataSource {
     public DbDataSource(Context context) {
         this.databaseHelper = new DatabaseHelper(context);
         db = databaseHelper.getWritableDatabase();
+    }
+
+    @VisibleForTesting
+    public String getDbFileName() {
+        return databaseHelper.getDatabaseName();
     }
 
     @Override
@@ -82,27 +85,23 @@ public class DbDataSource implements DataSource {
 
     @Override
     public Cursor meteringGet() {
-        return db.rawQuery("SELECT _id, created, measure, device_id FROM meterings", null);
+        return db.rawQuery("SELECT _id, created, measure, device_id FROM meterings ORDER BY created", null);
     }
 
     @Override
     public void meteringDelete(int id) {
-
+        db.execSQL("DELETE FROM meterings WHERE _id = ?", new Object[]{id});
     }
 
     @Override
     public void meteringClear() {
-
+        db.execSQL("DELETE FROM meterings", new Object[]{});
     }
 
     @Override
     public void meteringChange(Metering metering) {
-
-    }
-
-    @VisibleForTesting
-    public String getDbFileName() {
-        return databaseHelper.getDatabaseName();
+        ContentValues cv = metering.toContentValues();
+        db.insertWithOnConflict("meterings", null, cv, SQLiteDatabase.CONFLICT_REPLACE);
     }
 
 }

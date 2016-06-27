@@ -1,5 +1,6 @@
 package me.ilich.mymeteringdevices.data.dto;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.support.annotation.VisibleForTesting;
@@ -17,40 +18,45 @@ public class Metering extends Dto {
     private static final SimpleDateFormat DB_SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault());
 
     static final String _ID = "_id";
-    static final String REGISTRATION_DATE = "REGISTRATION_DATE";
-    static final String VALUE = "value";
+    static final String CREATED = "created";
+    static final String MEASURE = "measure";
+    static final String DEVICE_ID = "device_id";
 
     public static final String[] COLUMN_NAMES = {
             _ID,
-            REGISTRATION_DATE,
-            VALUE
+            CREATED,
+            MEASURE,
+            DEVICE_ID
     };
 
     public static Metering fromCursor(Cursor cursor) {
         int id = cursor.getInt(cursor.getColumnIndex(_ID));
-        String dateStr = cursor.getString(cursor.getColumnIndex(REGISTRATION_DATE));
+        String dateStr = cursor.getString(cursor.getColumnIndex(CREATED));
         Date date = null;
         try {
             date = DB_SDF.parse(dateStr);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        double value = cursor.getDouble(cursor.getColumnIndex(VALUE));
-        return new Metering(id, date, value);
+        double value = cursor.getDouble(cursor.getColumnIndex(MEASURE));
+        int deviceId = cursor.getInt(cursor.getColumnIndex(DEVICE_ID));
+        return new Metering(id, date, value, deviceId);
     }
 
     private final int id;
     private final Date date;
     private final double value;
+    private final int deviceId;
 
-    public Metering(Date date, double value) {
-        this(NOT_SET, date, value);
+    public Metering(Date date, double value, int deviceId) {
+        this(NOT_SET, date, value, deviceId);
     }
 
-    public Metering(int id, Date date, double value) {
+    public Metering(int id, Date date, double value, int deviceId) {
         this.id = id;
         this.date = date;
         this.value = value;
+        this.deviceId = deviceId;
     }
 
     @Override
@@ -91,7 +97,21 @@ public class Metering extends Dto {
 
     @VisibleForTesting
     public void addToCursor(MatrixCursor c) {
-        c.addRow(new Object[]{id, DB_SDF.format(date), value});
+        c.addRow(new Object[]{id, DB_SDF.format(date), value, deviceId});
     }
 
+    public ContentValues toContentValues() {
+        ContentValues cv = new ContentValues();
+        if (id != NOT_SET) {
+            cv.put(_ID, id);
+        }
+        cv.put(CREATED, DB_SDF.format(date));
+        cv.put(MEASURE, value);
+        cv.put(DEVICE_ID, deviceId);
+        return cv;
+    }
+
+    public int getDeviceId() {
+        return deviceId;
+    }
 }

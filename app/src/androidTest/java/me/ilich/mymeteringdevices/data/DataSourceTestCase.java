@@ -185,6 +185,21 @@ public abstract class DataSourceTestCase extends AndroidTestCase {
     public void testMeterings() {
         Cursor c;
 
+        c = dataSource.unitsGetAll();
+        c.moveToFirst();
+        Unit unit1 = Unit.fromCursor(c);
+        c.close();
+        dataSource.typeChange(new Type("type 1", unit1.getId()));
+        c = dataSource.typesGetAll();
+        c.moveToFirst();
+        Type type1 = Type.fromCursor(c);
+        c.close();
+        dataSource.devicesChange(new Device("device 1", type1.getId()));
+        c = dataSource.devicesGetAll();
+        c.moveToFirst();
+        Device device1 = Device.fromCursor(c);
+        c.close();
+
         c = dataSource.meteringGet();
         assertNotNull(c);
         c.close();
@@ -195,7 +210,7 @@ public abstract class DataSourceTestCase extends AndroidTestCase {
         Date date1 = new Date();
         double value1 = 100;
         double value2 = 200;
-        Metering metering1 = new Metering(date1, value2);
+        Metering metering1 = new Metering(date1, value2, device1.getId());
 
         dataSource.meteringChange(metering1);
         assertCursorContainsAndClose(dataSource.meteringGet(), metering1);
@@ -204,11 +219,19 @@ public abstract class DataSourceTestCase extends AndroidTestCase {
         c.moveToFirst();
         Metering metering2 = Metering.fromCursor(c);
         c.close();
-        Metering metering3 = new Metering(metering2.getId(), date1, value2);
+        Metering metering3 = new Metering(metering2.getId(), date1, value2, device1.getId());
         dataSource.meteringChange(metering3);
         assertCursorContainsAndClose(dataSource.meteringGet(), metering3);
 
         dataSource.meteringClear();
+        assertCursorSizeAndClose(dataSource.meteringGet(), 0);
+
+        dataSource.meteringChange(new Metering(date1, value1, device1.getId()));
+        c = dataSource.meteringGet();
+        c.moveToFirst();
+        Metering metering = Metering.fromCursor(c);
+        c.close();
+        dataSource.meteringDelete(metering.getId());
         assertCursorSizeAndClose(dataSource.meteringGet(), 0);
 
     }
