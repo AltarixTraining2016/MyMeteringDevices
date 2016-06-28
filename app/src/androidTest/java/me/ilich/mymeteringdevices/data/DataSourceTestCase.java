@@ -1,16 +1,17 @@
 package me.ilich.mymeteringdevices.data;
 
 import android.database.Cursor;
-import android.test.AndroidTestCase;
+import android.test.InstrumentationTestCase;
 
 import java.util.Date;
 
 import me.ilich.mymeteringdevices.data.dto.Device;
 import me.ilich.mymeteringdevices.data.dto.Metering;
+import me.ilich.mymeteringdevices.data.dto.Summary;
 import me.ilich.mymeteringdevices.data.dto.Type;
 import me.ilich.mymeteringdevices.data.dto.Unit;
 
-public abstract class DataSourceTestCase extends AndroidTestCase {
+public abstract class DataSourceTestCase extends InstrumentationTestCase {
 
     private DataSource dataSource;
 
@@ -81,7 +82,7 @@ public abstract class DataSourceTestCase extends AndroidTestCase {
 
         assertEquals(t1.getName(), t2.getName());
 
-        dataSource.typeChange(t2);
+        dataSource.typeChange(new Type(t2.getId(), t2.getName() + "!!!", t2.getUnitId()));
 
         c = dataSource.typesGetAll();
         assertEquals(1, c.getCount());
@@ -91,7 +92,7 @@ public abstract class DataSourceTestCase extends AndroidTestCase {
 
         assertNotSame(t1.getName(), t3.getName());
 
-        dataSource.deleteDeviceType(t3.getId());
+        dataSource.typeDelete(t3.getId());
 
         c = dataSource.typesGetAll();
         assertEquals(0, c.getCount());
@@ -174,14 +175,6 @@ public abstract class DataSourceTestCase extends AndroidTestCase {
         c2.close();
     }
 
-    public void testSummary() {
-
-        Cursor c = dataSource.summaryGet();
-        assertNotNull(c);
-        c.close();
-
-    }
-
     public void testMeterings() {
         Cursor c;
 
@@ -235,5 +228,19 @@ public abstract class DataSourceTestCase extends AndroidTestCase {
         assertCursorSizeAndClose(dataSource.meteringGet(), 0);
 
     }
+
+    public void testSummary() {
+
+        Cursor c = dataSource.summaryGet();
+        assertNotNull(c);
+        assertTrue(c.moveToFirst());
+        do {
+            Summary summary = Summary.fromCursor(c);
+            assertNotNull(summary);
+        } while (c.moveToNext());
+        c.close();
+
+    }
+
 
 }

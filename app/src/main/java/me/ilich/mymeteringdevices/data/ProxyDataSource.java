@@ -55,7 +55,7 @@ public class ProxyDataSource implements DataSource {
     }
 
     @Override
-    public void deleteDeviceType(int id) {
+    public void typeDelete(int id) {
 
     }
 

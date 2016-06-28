@@ -20,8 +20,4 @@ public class ActivityTestCase extends ActivityInstrumentationTestCase2<MainActiv
         mActivity = getActivity();
     }
 
-    public void testA() {
-        //Espresso.onView(ViewMatchers.withId(R.id.version)).perform(ViewActions.click());
-    }
-
 }

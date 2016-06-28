@@ -13,11 +13,11 @@ public interface DataSource {
 
     Cursor typesGetAll();
 
-    void typesDeleteAll();
-
     void typeChange(Type deviceType);
 
-    void deleteDeviceType(int id);
+    void typesDeleteAll();
+
+    void typeDelete(int id);
 
 
     Cursor devicesGetAll();
@@ -31,14 +31,15 @@ public interface DataSource {
     void devicesClear();
 
 
-    Cursor summaryGet();
-
     Cursor meteringGet();
+
+    void meteringChange(Metering metering);
 
     void meteringDelete(int id);
 
     void meteringClear();
 
-    void meteringChange(Metering metering);
+
+    Cursor summaryGet();
 
 }

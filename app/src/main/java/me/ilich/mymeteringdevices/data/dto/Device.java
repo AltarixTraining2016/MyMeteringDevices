@@ -13,7 +13,8 @@ public class Device extends Dto {
 
     public static String[] COLUMN_NAMES = {
             ID,
-            NAME
+            NAME,
+            DEVICE_TYPE_ID
     };
 
     public static Device fromCursor(Cursor cursor) {
@@ -49,7 +50,7 @@ public class Device extends Dto {
 
     @VisibleForTesting
     public void addToCursor(MatrixCursor cursor) {
-        cursor.addRow(new Object[]{id, name});
+        cursor.addRow(new Object[]{id, name, typeId});
     }
 
     @Override

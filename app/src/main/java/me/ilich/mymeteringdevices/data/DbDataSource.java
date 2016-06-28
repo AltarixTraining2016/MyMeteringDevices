@@ -17,7 +17,8 @@ public class DbDataSource implements DataSource {
     private final SQLiteDatabase db;
 
     public DbDataSource(Context context) {
-        this.databaseHelper = new DatabaseHelper(context);
+        DatabaseHelper.init(context);
+        this.databaseHelper = DatabaseHelper.getInstance();
         db = databaseHelper.getWritableDatabase();
     }
 
@@ -74,13 +75,13 @@ public class DbDataSource implements DataSource {
     }
 
     @Override
-    public void deleteDeviceType(int id) {
+    public void typeDelete(int id) {
         db.delete("device_types", "_id = ?", new String[]{String.valueOf(id)});
     }
 
     @Override
     public Cursor summaryGet() {
-        return null;
+        return db.rawQuery("SELECT device_id, device_name, last_measure, last_created FROM summary", null);
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -44,8 +45,8 @@ public class MemoryDataSource implements DataSource {
     @Override
     public Cursor devicesGetAll() {
         final MatrixCursor cursor = new MatrixCursor(Device.COLUMN_NAMES);
-        for (Device meteringDevice : deviceList) {
-            meteringDevice.addToCursor(cursor);
+        for (Device device : deviceList) {
+            device.addToCursor(cursor);
         }
         return cursor;
     }
@@ -117,22 +118,25 @@ public class MemoryDataSource implements DataSource {
     public void typeChange(Type newType) {
         boolean contains = false;
         Type oldType = null;
-        if (newType.getId() != Type.NOT_SET) {
-            for (Type currentType : typesList) {
-                if (currentType.getId() == newType.getId()) {
-                    contains = true;
-                    oldType = currentType;
-                }
+        for (Iterator<Type> iterator = typesList.iterator(); iterator.hasNext(); ) {
+            Type deviceType = iterator.next();
+            if (deviceType.getId() == newType.getId()) {
+                oldType = deviceType;
+                contains = true;
+                iterator.remove();
             }
         }
         if (!contains) {
             Type type = new Type(typesList.size(), newType.getName(), newType.getUnitId());
             typesList.add(type);
+        } else {
+            Type type = new Type(oldType.getId(), newType.getName(), newType.getUnitId());
+            typesList.add(type);
         }
     }
 
     @Override
-    public void deleteDeviceType(int id) {
+    public void typeDelete(int id) {
         for (Iterator<Type> iterator = typesList.iterator(); iterator.hasNext(); ) {
             Type deviceType = iterator.next();
             if (deviceType.getId() == id) {
@@ -144,8 +148,8 @@ public class MemoryDataSource implements DataSource {
     @Override
     public Cursor summaryGet() {
         MatrixCursor c = new MatrixCursor(Summary.COLUMN_NAMES);
-        c.addRow(new Object[]{"Газ", "5", "120", "22.10.2016"});
-        c.addRow(new Object[]{"Горячая вода", "245", "12000", "20.10.2016"});
+        new Summary(1, "device 1", 10, new Date()).addToCursor(c);
+        new Summary(2, "device 2", 20, new Date()).addToCursor(c);
         return c;
     }
 
@@ -160,7 +164,12 @@ public class MemoryDataSource implements DataSource {
 
     @Override
     public void meteringDelete(int id) {
-
+        for (Iterator<Metering> iterator = meteringsList.iterator(); iterator.hasNext(); ) {
+            Metering metering = iterator.next();
+            if (metering.getId() == id) {
+                iterator.remove();
+            }
+        }
     }
 
     @Override
