@@ -1,17 +1,25 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
     </style>
 
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+
 
     <style name="Ripple">
         <item name="android:clickable">true</item>
@@ -25,24 +33,24 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:src">@drawable/ic_more_vert_black_24dp</item>
-        <item name="android:tint">@color/text_ordinary</item>
+        <!--        <item name="android:tint">@color/text_ordinary</item>-->
     </style>
 
     <style name="TextView" />
 
     <style name="TextView.Ordinary">
-        <item name="android:textColor">@color/text_ordinary</item>
+        <!--        <item name="android:textColor">@color/text_ordinary</item>-->
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">14sp</item>
     </style>
 
     <style name="Root">
-        <item name="android:background">@color/background</item>
+        <!--<item name="android:background">@color/background</item>-->
         <item name="android:padding">@dimen/space_16dp</item>
     </style>
 
     <style name="Root.NoPadding">
-        <item name="android:background">@color/background</item>
+        <!--<item name="android:background">@color/background</item>-->
         <item name="android:padding">@dimen/space_0dp</item>
     </style>
 

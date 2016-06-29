@@ -10,7 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".ui.MainActivity">
+        <activity
+            android:name=".ui.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -19,11 +21,16 @@
 
         <activity
             android:name=".ui.types.TypeEditActivity"
-            android:label="@string/title_device_type_edit" />
+            android:label="@string/title_device_type_edit"
+            android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".ui.devices.DeviceViewActivity" />
+        <activity
+            android:name=".ui.devices.DeviceViewActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".ui.devices.DeviceEditActivity" />
+        <activity
+            android:name=".ui.devices.DeviceEditActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
     </application>
 
