@@ -22,10 +22,10 @@ android {
     }
     productFlavors {
         db {
-            buildConfigField "me.ilich.mymeteringdevices.MeteringDevicesApplication.DataSourceType", "DATA_SOURCE", "me.ilich.mymeteringdevices.MeteringDevicesApplication.DataSource.DB"
+            buildConfigField "me.ilich.mymeteringdevices.MeteringDevicesApplication.DataSourceType", "DATA_SOURCE", "me.ilich.mymeteringdevices.MeteringDevicesApplication.DataSourceType.DB"
         }
         memory {
-            buildConfigField "me.ilich.mymeteringdevices.MeteringDevicesApplication.DataSourceType", "DATA_SOURCE", "me.ilich.mymeteringdevices.MeteringDevicesApplication.DataSource.MEMORY"
+            buildConfigField "me.ilich.mymeteringdevices.MeteringDevicesApplication.DataSourceType", "DATA_SOURCE", "me.ilich.mymeteringdevices.MeteringDevicesApplication.DataSourceType.MEMORY"
         }
     }
     sourceSets {
