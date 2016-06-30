@@ -38,5 +38,7 @@
     <string name="dialog_button_cancel">Отмена</string>
     <string name="device_name_hint">Название счётчика</string>
     <string name="menu_rate">Оценить приложение</string>
+    <string name="summary_last_date" />
+    <string name="summary_last_value" />
 
 </resources>

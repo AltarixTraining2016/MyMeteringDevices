@@ -51,4 +51,7 @@ public class Summary extends Dto {
         c.addRow(new Object[]{deviceId, deviceName, lastMeteringValue, lastMeteringDate});
     }
 
+    public String getDeviceName() {
+        return deviceName;
+    }
 }

@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,13 +53,16 @@ public class SummaryFragment extends Fragment implements Titleable {
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.device_name)
+        TextView deviceNameTextView;
+
         public ViewHolder(ViewGroup root) {
             super(LayoutInflater.from(getContext()).inflate(R.layout.listitem_summary, root, false));
             ButterKnife.bind(this, itemView);
         }
 
         public void fill(Summary summary) {
-            //TODO
+            deviceNameTextView.setText(summary.getDeviceName());
         }
 
     }
