@@ -21,7 +21,7 @@ import me.ilich.mymeteringdevices.ui.meterings.EditMeteringFragment;
 import me.ilich.mymeteringdevices.ui.summary.SummaryFragment;
 import me.ilich.mymeteringdevices.ui.types.TypesListFragment;
 
-public class MainActivity extends MeteringActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends MeteringActivity implements NavigationView.OnNavigationItemSelectedListener, EditMeteringFragment.Listener {
 
     private static final String STATE_TITLE = "title";
 
@@ -156,4 +156,8 @@ public class MainActivity extends MeteringActivity implements NavigationView.OnN
         }
     }
 
+    @Override
+    public void onMeteringSaved() {
+        replaceContent(SummaryFragment.create());
+    }
 }

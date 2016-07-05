@@ -42,5 +42,8 @@
     <string name="summary_last_value" />
     <string name="metering_edit_date">Введите дату</string>
     <string name="metering_edit_time">Введите время</string>
+    <string name="metering_edit_error_no_datetime">Введите время и дату</string>
+    <string name="metering_edit_error_no_device">Укажите счётчик</string>
+    <string name="metering_edit_error_no_value">Введите показания</string>
 
 </resources>

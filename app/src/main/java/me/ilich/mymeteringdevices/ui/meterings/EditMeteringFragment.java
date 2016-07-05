@@ -6,16 +6,20 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -26,6 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.ilich.mymeteringdevices.R;
+import me.ilich.mymeteringdevices.data.dto.Device;
 import me.ilich.mymeteringdevices.data.dto.Metering;
 import me.ilich.mymeteringdevices.ui.MeteringFragment;
 import me.ilich.mymeteringdevices.ui.Titleable;
@@ -68,6 +73,9 @@ public class EditMeteringFragment extends MeteringFragment implements Titleable 
     @Nullable
     private Date meteringDateTime;
 
+    @Nullable
+    private Device meteringDevice;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,7 +113,20 @@ public class EditMeteringFragment extends MeteringFragment implements Titleable 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        deviceSpinner.setAdapter(new Adapter(getDataSource().devicesGetAll()));
+        final Adapter adapter = new Adapter(getDataSource().devicesGetAll());
+        deviceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView adapterView, View view, int pos, long l) {
+                Cursor c = (Cursor) adapterView.getItemAtPosition(pos);
+                meteringDevice = Device.fromCursor(c);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView adapterView) {
+                meteringDevice = null;
+            }
+        });
+        deviceSpinner.setAdapter(adapter);
         processDateTimeTitle();
     }
 
@@ -128,10 +149,18 @@ public class EditMeteringFragment extends MeteringFragment implements Titleable 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_save) {
-            final Metering newMetering;
-            //newMetering = new Metering();
-            //getDataSource().meteringChange(newMetering);
-            ((Listener) getActivity()).onSaved();
+            if (meteringDateTime == null) {
+                Toast.makeText(getContext(), R.string.metering_edit_error_no_datetime, Toast.LENGTH_SHORT).show();
+            } else if (meteringDevice == null) {
+                Toast.makeText(getContext(), R.string.metering_edit_error_no_device, Toast.LENGTH_SHORT).show();
+            } else if (TextUtils.isEmpty(measureEditText.getText().toString())) {
+                Toast.makeText(getContext(), R.string.metering_edit_error_no_value, Toast.LENGTH_SHORT).show();
+            } else {
+                double value = Double.valueOf(measureEditText.getText().toString());
+                final Metering newMetering = new Metering(meteringDateTime, value, meteringDevice.getId());
+                getDataSource().meteringChange(newMetering);
+                ((Listener) getActivity()).onMeteringSaved();
+            }
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -207,19 +236,21 @@ public class EditMeteringFragment extends MeteringFragment implements Titleable 
 
         @Override
         public View newView(Context context, Cursor cursor, ViewGroup viewGroup) {
-            return null;
+            return LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_1, viewGroup, false);
         }
 
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
-
+            final Device device = Device.fromCursor(cursor);
+            TextView textView = (TextView) view.findViewById(android.R.id.text1);
+            textView.setText(device.getName());
         }
 
     }
 
     public interface Listener {
 
-        void onSaved();
+        void onMeteringSaved();
 
     }
 
