@@ -17,7 +17,7 @@ import me.ilich.mymeteringdevices.R;
 import me.ilich.mymeteringdevices.ui.about.AboutFragment;
 import me.ilich.mymeteringdevices.ui.devices.DevicesListFragment;
 import me.ilich.mymeteringdevices.ui.meterings.AllMeteringFragment;
-import me.ilich.mymeteringdevices.ui.meterings.EnterMeteringFragment;
+import me.ilich.mymeteringdevices.ui.meterings.EditMeteringFragment;
 import me.ilich.mymeteringdevices.ui.summary.SummaryFragment;
 import me.ilich.mymeteringdevices.ui.types.TypesListFragment;
 
@@ -119,7 +119,7 @@ public class MainActivity extends MeteringActivity implements NavigationView.OnN
                 b = true;
                 break;
             case R.id.menu_enter_metering:
-                replaceContent(EnterMeteringFragment.create());
+                replaceContent(EditMeteringFragment.create());
                 b = true;
                 break;
             case R.id.menu_all_metering:

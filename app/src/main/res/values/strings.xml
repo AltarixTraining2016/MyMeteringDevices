@@ -40,5 +40,7 @@
     <string name="menu_rate">Оценить приложение</string>
     <string name="summary_last_date" />
     <string name="summary_last_value" />
+    <string name="metering_edit_date">Введите дату</string>
+    <string name="metering_edit_time">Введите время</string>
 
 </resources>
