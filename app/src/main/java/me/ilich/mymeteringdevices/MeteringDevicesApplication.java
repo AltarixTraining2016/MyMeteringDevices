@@ -17,7 +17,7 @@ public class MeteringDevicesApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        switch (BuildConfig.DATA_SOURCE){
+        switch (BuildConfig.DATA_SOURCE) {
             case DB:
                 dataSource = new DbDataSource(getApplicationContext());
                 break;

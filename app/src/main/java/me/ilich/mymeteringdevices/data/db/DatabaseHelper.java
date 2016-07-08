@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import me.ilich.mymeteringdevices.BuildConfig;
 import me.ilich.mymeteringdevices.tools.AssetsReader;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -13,7 +14,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static DatabaseHelper instance = null;
 
-    public static void init(Context context){
+    public static void init(Context context) {
         instance = new DatabaseHelper(context);
     }
 
@@ -37,7 +38,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
         };
         AssetsReader.byLine(context, "db_create_v1.sql", listener);
-        AssetsReader.byLine(context, "db_fill_prod.sql", listener);
+        if (BuildConfig.DEBUG) {
+            AssetsReader.byLine(context, "db_fill_debug.sql", listener);
+        } else {
+            AssetsReader.byLine(context, "db_fill_prod.sql", listener);
+        }
     }
 
     @Override

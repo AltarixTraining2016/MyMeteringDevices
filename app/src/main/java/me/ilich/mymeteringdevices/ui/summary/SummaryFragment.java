@@ -12,6 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.ilich.mymeteringdevices.MeteringDevicesApplication;
@@ -53,8 +56,12 @@ public class SummaryFragment extends Fragment implements Titleable {
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
+        private final SimpleDateFormat SDF = new SimpleDateFormat("dd MMMM yyyy, HH:mm", Locale.getDefault());
+
         @BindView(R.id.device_name)
         TextView deviceNameTextView;
+
+        TextView lastDateTextView;
 
         public ViewHolder(ViewGroup root) {
             super(LayoutInflater.from(getContext()).inflate(R.layout.listitem_summary, root, false));
@@ -63,6 +70,7 @@ public class SummaryFragment extends Fragment implements Titleable {
 
         public void fill(Summary summary) {
             deviceNameTextView.setText(summary.getDeviceName());
+            lastDateTextView.setText(SDF.format(summary.getLastDate()));
         }
 
     }

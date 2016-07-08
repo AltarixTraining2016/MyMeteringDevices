@@ -1,0 +1,14 @@
+INSERT INTO units (_id, name) VALUES (1, "м³");
+INSERT INTO units (_id, name) VALUES (2, "кВт·ч");
+INSERT INTO device_types (_id, name, unit_id) VALUES (1, "газ", 1);
+INSERT INTO device_types (_id, name, unit_id) VALUES (2, "вода", 1);
+INSERT INTO device_types (_id, name, unit_id) VALUES (3, "электричество", 2);
+INSERT INTO devices (_id, name, device_type_id) VALUES (1, "Холодная вода", 2);
+INSERT INTO devices (_id, name, device_type_id) VALUES (2, "Горячая вода", 2);
+INSERT INTO devices (_id, name, device_type_id) VALUES (3, "Газ", 1);
+INSERT INTO devices (_id, name, device_type_id) VALUES (4, "Электричество день", 3);
+INSERT INTO devices (_id, name, device_type_id) VALUES (5, "Электричество ночь", 3);
+INSERT INTO meterings (_id, created, measure, device_id) VALUES ( 1, "2016-01-20 17:00:00.000", 50, 1);
+INSERT INTO meterings (_id, created, measure, device_id) VALUES ( 2, "2016-01-20 17:01:00.000", 28, 2);
+INSERT INTO meterings (_id, created, measure, device_id) VALUES ( 3, "2016-02-20 17:01:00.000", 1.2, 3);
+INSERT INTO meterings (_id, created, measure, device_id) VALUES (10, "2016-02-21 17:00:00.000", 102, 1);
