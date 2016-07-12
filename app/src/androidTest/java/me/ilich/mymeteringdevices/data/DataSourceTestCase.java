@@ -1,7 +1,16 @@
 package me.ilich.mymeteringdevices.data;
 
 import android.database.Cursor;
+import android.support.test.filters.LargeTest;
+import android.support.test.filters.SmallTest;
+import android.support.test.runner.AndroidJUnit4;
 import android.test.InstrumentationTestCase;
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.util.Date;
 
@@ -11,13 +20,16 @@ import me.ilich.mymeteringdevices.data.dto.Summary;
 import me.ilich.mymeteringdevices.data.dto.Type;
 import me.ilich.mymeteringdevices.data.dto.Unit;
 
-public abstract class DataSourceTestCase extends InstrumentationTestCase {
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNotSame;
+import static junit.framework.Assert.assertTrue;
+
+public abstract class DataSourceTestCase {
 
     private DataSource dataSource;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    public void before() throws Exception {
         dataSource = createDataSource();
     }
 
@@ -44,12 +56,14 @@ public abstract class DataSourceTestCase extends InstrumentationTestCase {
         cursor.close();
     }
 
+    @Test
     public void testUnits() {
         Cursor c = dataSource.unitsGetAll();
         assertNotNull(c);
         c.close();
     }
 
+    @Test
     public void testTypes() {
         Cursor c;
 
@@ -100,6 +114,7 @@ public abstract class DataSourceTestCase extends InstrumentationTestCase {
 
     }
 
+    @Test
     public void testDevices() {
 
         Cursor c;
@@ -175,6 +190,7 @@ public abstract class DataSourceTestCase extends InstrumentationTestCase {
         c2.close();
     }
 
+    @Test
     public void testMeterings() {
         Cursor c;
 
@@ -229,6 +245,7 @@ public abstract class DataSourceTestCase extends InstrumentationTestCase {
 
     }
 
+    @Test
     public void testSummary() {
 
         Cursor c = dataSource.summaryGet();

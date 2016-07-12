@@ -3,6 +3,7 @@ package me.ilich.mymeteringdevices.data.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import me.ilich.mymeteringdevices.BuildConfig;
 import me.ilich.mymeteringdevices.tools.AssetsReader;
@@ -31,9 +32,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(final SQLiteDatabase db) {
+        Log.v("db", "onCreate");
         AssetsReader.OnReadListener listener = new AssetsReader.OnReadListener() {
             @Override
             public void onLine(String line) {
+                Log.v("db", line);
                 db.execSQL(line);
             }
         };
@@ -47,7 +50,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        Log.v("db", "onUpgrade");
     }
 
 }

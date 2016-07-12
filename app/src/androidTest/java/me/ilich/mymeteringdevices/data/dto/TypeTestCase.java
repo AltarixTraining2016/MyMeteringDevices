@@ -1,10 +1,20 @@
 package me.ilich.mymeteringdevices.data.dto;
 
-import junit.framework.TestCase;
+import android.support.test.filters.SmallTest;
+import android.support.test.runner.AndroidJUnit4;
 
-public class TypeTestCase extends TestCase {
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-    public void testEquals() {
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotSame;
+
+@RunWith(AndroidJUnit4.class)
+@SmallTest
+public class TypeTestCase {
+
+    @Test
+    public void equals() {
         Type type1 = new Type(1, "A", 1);
         Type type2 = new Type(1, "A", 1);
         Type type3 = new Type(3, "B", 2);

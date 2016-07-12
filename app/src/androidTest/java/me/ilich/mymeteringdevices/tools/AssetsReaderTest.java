@@ -1,14 +1,27 @@
 package me.ilich.mymeteringdevices.tools;
 
+import android.support.test.filters.LargeTest;
+import android.support.test.filters.SmallTest;
+import android.support.test.runner.AndroidJUnit4;
 import android.test.AndroidTestCase;
 import android.test.InstrumentationTestCase;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AssetsReaderTest extends InstrumentationTestCase {
+import static android.support.test.InstrumentationRegistry.getInstrumentation;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 
-    public void testRead() {
+@RunWith(AndroidJUnit4.class)
+@LargeTest
+public class AssetsReaderTest {
+
+    @Test
+    public void read() {
         final List<String> l = new ArrayList<>();
         l.add("string1");
         l.add("string2");

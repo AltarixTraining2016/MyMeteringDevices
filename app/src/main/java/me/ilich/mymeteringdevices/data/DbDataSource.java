@@ -81,7 +81,13 @@ public class DbDataSource implements DataSource {
 
     @Override
     public Cursor summaryGet() {
-        return db.rawQuery("SELECT device_id, device_name, last_measure, last_created FROM summary", null);
+        return db.rawQuery(
+                "SELECT summary.device_id, summary.device_name, summary.last_measure, summary.last_created, units.name as 'unit' " +
+                        "FROM summary " +
+                        "LEFT JOIN devices ON devices._id = summary.device_id " +
+                        "LEFT JOIN device_types ON device_types._id = devices.device_type_id " +
+                        "LEFT JOIN units ON units._id = device_types.unit_id " +
+                        "ORDER BY summary.last_created", null);
     }
 
     @Override

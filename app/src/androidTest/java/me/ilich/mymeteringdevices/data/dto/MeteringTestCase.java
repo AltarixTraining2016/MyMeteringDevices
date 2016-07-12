@@ -1,12 +1,24 @@
 package me.ilich.mymeteringdevices.data.dto;
 
+import android.support.test.filters.SmallTest;
+import android.support.test.runner.AndroidJUnit4;
+
 import junit.framework.TestCase;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.util.Date;
 
-public class MeteringTestCase extends TestCase {
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotSame;
 
-    public void testEquals() {
+@RunWith(AndroidJUnit4.class)
+@SmallTest
+public class MeteringTestCase{
+
+    @Test
+    public void equals() {
         Date date1 = new Date();
         Date date2 = new Date(1);
 

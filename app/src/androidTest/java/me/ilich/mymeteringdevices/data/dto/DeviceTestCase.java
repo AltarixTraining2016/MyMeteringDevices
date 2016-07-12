@@ -1,10 +1,20 @@
 package me.ilich.mymeteringdevices.data.dto;
 
-import junit.framework.TestCase;
+import android.support.test.filters.SmallTest;
+import android.support.test.runner.AndroidJUnit4;
 
-public class DeviceTestCase extends TestCase {
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-    public void testEquals() {
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotSame;
+
+@RunWith(AndroidJUnit4.class)
+@SmallTest
+public class DeviceTestCase {
+
+    @Test
+    public void equals() {
         Device device1 = new Device(1, "dev1", 1);
         Device device2 = new Device(1, "dev1", 1);
         Device device3 = new Device(2, "dev2", 2);

@@ -148,8 +148,8 @@ public class MemoryDataSource implements DataSource {
     @Override
     public Cursor summaryGet() {
         MatrixCursor c = new MatrixCursor(Summary.COLUMN_NAMES);
-        new Summary(1, "device 1", 10, unit, new Date()).addToCursor(c);
-        new Summary(2, "device 2", 20, unit, new Date()).addToCursor(c);
+        new Summary(1, "device 1", 10, "unit 1", new Date()).addToCursor(c);
+        new Summary(2, "device 2", 20, "unit 2", new Date()).addToCursor(c);
         return c;
     }
 
